@@ -1,18 +1,51 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+    <div class="container">
+        <div class="well">
+            <b-table striped hover :items="programs" :fields="fields" outlined bordered>
+                <template slot="title_id" slot-scope="data">
+                    <a href="jamnevisi.ir">{{data.item.title}}</a>
+                </template>
+            </b-table>
+        </div>
+
+    </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+    import {HTTP} from '@/utils'
+    import _ from 'lodash'
 
-export default {
-  name: 'home',
-  components: {
-    HelloWorld
-  }
-}
+    export default {
+        name: 'Home',
+        data() {
+            return {
+                programs: [],
+                fields: [
+                    { key: 'title_id', label: 'عنوان برنامه' },
+                    { key: 'program_interval', label: 'زمان برنامه' },
+                    { key: 'register_interval', label: 'زمان ثبت‌نام' },
+                    { key: 'status', label: 'وضعیت' },
+                ],
+            }
+        },
+        created() {
+            this.fetchData()
+        },
+
+        watch: {
+            '$route': 'fetchData'
+        },
+
+        methods: {
+            fetchData() {
+                HTTP.get('programs/?format=json')
+                    .then((resp) => {
+                        this.programs = resp.data;
+                    })
+                    .catch((err) => {
+                        console.log(err)
+                    })
+            }
+        }
+    }
 </script>
