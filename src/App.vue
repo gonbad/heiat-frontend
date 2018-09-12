@@ -10,7 +10,7 @@
 
 
                 <!-- Right aligned nav items -->
-                <b-navbar-nav class="mr-auto">
+                <b-navbar-nav class="ml-auto">
                     <b-nav-item v-if="!isAuthenticated && !authLoading" :to="{ name: 'Login' }">ورود</b-nav-item>
                     <b-nav-item v-if="isProfileLoaded" :to="{ name: 'Login' }">{{getProfile.username}}</b-nav-item>
                     <b-nav-item v-if="isAuthenticated" @click="logout">خروج</b-nav-item>
