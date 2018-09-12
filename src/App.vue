@@ -37,7 +37,6 @@
             if (!!token) {
                 axios.defaults.headers.common['Authorization'] = 'Token ' + localStorage.getItem('user-token');
                 this.$store.dispatch(USER_REQUEST).then(() => {
-                    console.log('me loaded');
                 })
             }
         },
@@ -47,7 +46,10 @@
             }
         },
         computed: {
-            ...mapGetters(['getProfile', 'isAuthenticated', 'isProfileLoaded'])
+            ...mapGetters(['getProfile', 'isAuthenticated', 'isProfileLoaded']),
+            ...mapState({
+                authLoading: state => state.auth.status === 'loading',
+            })
         }
 
     }
