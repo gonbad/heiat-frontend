@@ -4,13 +4,7 @@
 
 <template>
     <div>
-        <b-nav fill tabs>
-            <b-nav-item :to="{name:'Profile.User'}" exact>اطلاعات شناسنامه‌ای</b-nav-item>
-            <b-nav-item :to="{name:'Profile.Base'}">اطلاعات اصلی</b-nav-item>
-            <b-nav-item :to="{name:'Profile.Passport'}">اطلاعات نظام وظیفه و گذرنامه</b-nav-item>
-            <b-nav-item :to="{name:'Profile.ChangePassword'}">تغییر گذرواژه</b-nav-item>
-        </b-nav>
-        <router-view></router-view>
+       cp
     </div>
 </template>
 

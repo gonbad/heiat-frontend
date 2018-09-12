@@ -3,6 +3,10 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
+import ProfileUser from './views/ProfileUser'
+import ProfileBase from './views/ProfileBase'
+import ProfilePassport from './views/ProfilePassport'
+import ProfileChangePassword from './views/ProfileChangePassword'
 
 Vue.use(Router)
 
@@ -21,9 +25,30 @@ export default new Router({
             component: Login
         },
         {
-            path: '/profile',
-            name: 'Profile',
-            component: Profile
+            path: '/profile/',
+            component: Profile,
+            children: [
+                {
+                    path: 'base',
+                    name: 'Profile.Base',
+                    component: ProfileBase
+                },
+                {
+                    path: 'passport',
+                    name: 'Profile.Passport',
+                    component: ProfilePassport
+                },
+                {
+                    path: 'change/password',
+                    name: 'Profile.ChangePassword',
+                    component: ProfileChangePassword
+                },
+                {
+                    path: '',
+                    name: 'Profile.User',
+                    component: ProfileUser
+                }
+            ]
         }
         // {
         //   path: '/about',
