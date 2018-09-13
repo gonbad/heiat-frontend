@@ -20,18 +20,17 @@
 
 <script>
     import {AUTH_REQUEST} from '@/modules/constants'
-
     export default {
         name: 'Profile',
         data () {
             return {
-                user:{...this.$store.getters.getProfile} || {}
+                user:JSON.parse( JSON.stringify( this.$store.getters.getUser ))
             }
         },
         created(){
-            this.$store.watch((state, getters) => getters.getProfile, () => {
-                console.log(this.$store.getters.getProfile);
-                this.user={...this.$store.getters.getProfile}
+            this.$store.watch((state, getters) => getters.getUser, () => {
+                console.log('watch'+JSON.stringify(this.$store.getters.getUser));
+                this.user=JSON.parse( JSON.stringify( this.$store.getters.getUser ))
             })
         },
     }

@@ -1,12 +1,12 @@
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT } from './constants'
+import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS } from './constants'
 import {HTTP} from '@/utils'
 import Vue from 'vue'
 
-const state = { status: '', profile: {} }
+const state = { status: '', user: {profile:{}} }
 
 const getters = {
-  getProfile: state => state.profile,
-  isProfileLoaded: state => !!state.profile.username,
+  getUser: state => state.user,
+  isProfileLoaded: state => !!state.user.username,
 }
 
 const actions = {
@@ -31,7 +31,11 @@ const mutations = {
   },
   [USER_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'profile', resp)
+    Vue.set(state, 'user', resp)
+  },
+  [PROFILE_SUCCESS]: (state, resp) => {
+    state.status = 'success'
+    state['user']['profile']=resp;
   },
   [USER_ERROR]: (state) => {
     state.status = 'error'

@@ -4,8 +4,27 @@
 
 <template>
     <div>
-       b
+        <br>
+        <b-container>
+            <b-form @submit="onSubmit">
+                <b-form-group id="exampleInputGroup1"
+                              label="نام پدر:"
+                              label-for="exampleInput1">
+                    <b-form-input id="exampleInput1"
+                                  type="text"
+                                  v-model="$parent.user.profile.father_name"
+                                  placeholder="نام پدر خود را وارد کنید">
+                    </b-form-input>
+                </b-form-group>
+                <b-button type="submit" variant="primary" :disabled="status==='sending'">
+                    <span v-show="status==='default'">ذخیره</span>
+                    <span v-show="status==='sending'">در حال ارسال</span>
+                    <span v-show="status==='saved'">ذخیره شد</span>
+                </b-button>
+            </b-form>
+        </b-container>
     </div>
+
 </template>
 
 <style>
@@ -13,21 +32,24 @@
 </style>
 
 <script>
-    import {AUTH_REQUEST} from '@/modules/constants'
+    import {PROFILE_SUCCESS} from '@/modules/constants'
+    import {formToJson, HTTP} from '@/utils'
 
     export default {
-        name: 'Profile',
-        data () {
+        name: 'ProfileBase',
+        data() {
             return {
-                username: '4900152234',
-                password: '2rooohet',
+                status:'default'
             }
         },
         methods: {
-            login: function () {
-                const { username, password } = this
-                this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-                    this.$router.push('/')
+            onSubmit: function (e) {
+                e.preventDefault();
+                this.status='sending';
+                HTTP.patch('accounts/profile/', this.$parent.user.profile).then(resp => {
+                    console.log(resp.data);
+                    this.$store.commit(PROFILE_SUCCESS, resp.data);
+                    this.status='saved'
                 })
             }
         },
