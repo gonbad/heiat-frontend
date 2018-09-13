@@ -2,7 +2,7 @@ import Vue from 'vue'
 import App from './App'
 import store from './store'
 import router from './router'
-import "./filters"
+import "./utils/filters"
 import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap-v4-rtl/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'

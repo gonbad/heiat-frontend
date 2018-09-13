@@ -53,7 +53,7 @@
 </style>
 
 <script>
-    import {USER_SUCCESS} from '@/modules/constants'
+    import {USER_SUCCESS} from '@/utils/constants'
     import {formToJson, HTTP} from '@/utils'
 
     export default {

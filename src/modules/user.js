@@ -1,4 +1,4 @@
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS } from './constants'
+import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS } from '../utils/constants'
 import {HTTP} from '@/utils'
 import Vue from 'vue'
 import _ from 'lodash';

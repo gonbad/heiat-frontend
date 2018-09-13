@@ -1,5 +1,5 @@
 /* eslint-disable promise/param-names */
-import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT,USER_REQUEST  } from './constants'
+import { AUTH_REQUEST, AUTH_ERROR, AUTH_SUCCESS, AUTH_LOGOUT,USER_REQUEST  } from '../utils/constants'
 import {HTTP} from '@/utils'
 import axios from 'axios';
 

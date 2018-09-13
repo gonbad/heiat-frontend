@@ -26,7 +26,7 @@
 </style>
 
 <script>
-    import {AUTH_REQUEST} from '@/modules/constants'
+    import {AUTH_REQUEST} from '@/utils/constants'
 
     export default {
         name: 'Login',

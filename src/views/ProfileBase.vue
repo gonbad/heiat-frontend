@@ -66,12 +66,13 @@
 </style>
 
 <script>
-    import {PROFILE_SUCCESS} from '@/modules/constants'
-    import {formToJson, HTTP, validateMobile, validateStudentNumber} from '@/utils'
+    import {PROFILE_SUCCESS} from '@/utils/constants'
+    import {formToJson, HTTP} from '@/utils'
+    import { validateMobile, validateStudentNumber} from '@/utils/validators'
     import {required} from 'vuelidate/lib/validators'
     import _ from 'lodash';
     import moment from 'moment-jalaali'
-    import {PEOPLE_TYPE_CHOICES} from '@/choices'
+    import {PEOPLE_TYPE_CHOICES} from '@/utils/choices'
 
     function ifStudentNumberIsRequired(people_type) {
         if (people_type === 'sharif student' || people_type.startsWith('sharif graduated')) {

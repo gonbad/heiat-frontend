@@ -24,7 +24,7 @@
 
 <script>
     import {mapGetters, mapState} from 'vuex'
-    import {AUTH_LOGOUT,USER_REQUEST} from '@/modules/constants'
+    import {AUTH_LOGOUT,USER_REQUEST} from '@/utils/constants'
     import axios from 'axios';
 
     export default {
