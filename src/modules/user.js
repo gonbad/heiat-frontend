@@ -14,7 +14,7 @@ const actions = {
     commit(USER_REQUEST)
     HTTP.get('auth/users/me')
       .then(resp => {
-        commit(USER_SUCCESS, resp)
+        commit(USER_SUCCESS, resp.data)
           console.log(resp.data.email);
       })
       .catch(resp => {
@@ -31,7 +31,7 @@ const mutations = {
   },
   [USER_SUCCESS]: (state, resp) => {
     state.status = 'success'
-    Vue.set(state, 'profile', resp.data)
+    Vue.set(state, 'profile', resp)
   },
   [USER_ERROR]: (state) => {
     state.status = 'error'

@@ -28,11 +28,7 @@ export default new Router({
             path: '/profile/',
             component: Profile,
             children: [
-                {
-                    path: 'base',
-                    name: 'Profile.Base',
-                    component: ProfileBase
-                },
+
                 {
                     path: 'passport',
                     name: 'Profile.Passport',
@@ -44,9 +40,13 @@ export default new Router({
                     component: ProfileChangePassword
                 },
                 {
-                    path: '',
+                    path: 'user',
                     name: 'Profile.User',
                     component: ProfileUser
+                },{
+                    path: '',
+                    name: 'Profile.Base',
+                    component: ProfileBase
                 }
             ]
         }
