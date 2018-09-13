@@ -134,7 +134,7 @@ export function formToJson(form) {
 }
 
 export const validateMobile = mobile => {
-    if (mobile.toString().length === 0) {
+    if (!mobile || mobile === '') {
         return true
     }
     if (mobile.toString().length !== 11) {

@@ -27,6 +27,15 @@
                     <span class="error" v-if="!$v.$parent.user.profile.mobile.required">شماره موبایل الزامی است</span>
                     <span class="error" v-if="!$v.$parent.user.profile.mobile.validateMobile">فرمت شماره موبایل درست نیست</span>
                 </b-form-group>
+                <b-form-group label="جنسیت:">
+                    <b-form-radio-group id="radios2" v-model="$parent.user.profile.gender" name="radioSubComponent" plain stacked>
+                        <b-form-radio :value="true">مرد</b-form-radio>
+                        <b-form-radio :value="false">زن</b-form-radio>
+                    </b-form-radio-group>
+                </b-form-group>
+                <b-form-group label="تاریخ تولد:">
+                    <pdatepicker v-model="$parent.user.profile.jalali__birth_date"></pdatepicker>
+                </b-form-group>
                 <b-button type="submit" variant="primary" :disabled="status==='sending'">
                     <span v-show="status==='default'">ذخیره</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
@@ -46,6 +55,9 @@
     import {PROFILE_SUCCESS} from '@/modules/constants'
     import {formToJson, HTTP,validateMobile} from '@/utils'
     import { required } from 'vuelidate/lib/validators'
+    import _ from 'lodash';
+    import moment from 'moment-jalaali'
+
     export default {
         name: 'ProfileBase',
         data() {
@@ -69,7 +81,9 @@
             onSubmit: function (e) {
                 e.preventDefault();
                 this.status='sending';
-                HTTP.patch('accounts/profile/', this.$parent.user.profile).then(resp => {
+                let obj=this.$parent.user.profile;
+                obj.birth_date=moment(obj.jalali__birth_date, 'jYYYY/jM/jD').format('YYYY-MM-DD');
+                HTTP.patch('accounts/profile/', obj).then(resp => {
                     console.log(resp.data);
                     this.$store.commit(PROFILE_SUCCESS, resp.data);
                     this.status='saved'

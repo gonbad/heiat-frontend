@@ -1,11 +1,13 @@
 import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS } from './constants'
 import {HTTP} from '@/utils'
 import Vue from 'vue'
+import _ from 'lodash';
+import moment from 'moment-jalaali'
 
 const state = { status: '', user: {profile:{}} }
 
 const getters = {
-  getUser: state => state.user,
+  getUser: state => _.merge(state.user,{profile:{jalali__birth_date:(state.user.profile.birth_date?moment(state.user.profile.birth_date,'YYYY-MM-DD').format('jYYYY/jM/jD'):'1370/6/7')}}),
   isProfileLoaded: state => !!state.user.username,
 }
 
