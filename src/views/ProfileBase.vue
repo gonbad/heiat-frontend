@@ -16,6 +16,17 @@
                                   placeholder="نام پدر خود را وارد کنید">
                     </b-form-input>
                 </b-form-group>
+                <b-form-group id="exampleInputGroup2"
+                              label="شماره موبایل:"
+                              label-for="exampleInpu2">
+                    <b-form-input id="exampleInput2"
+                                  type="text"
+                                  v-model="$parent.user.profile.mobile"
+                                  placeholder="تلفن همراه خود را وارد کنید">
+                    </b-form-input>
+                    <span class="error" v-if="!$v.$parent.user.profile.mobile.required">شماره موبایل الزامی است</span>
+                    <span class="error" v-if="!$v.$parent.user.profile.mobile.validateMobile">فرمت شماره موبایل درست نیست</span>
+                </b-form-group>
                 <b-button type="submit" variant="primary" :disabled="status==='sending'">
                     <span v-show="status==='default'">ذخیره</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
@@ -33,14 +44,26 @@
 
 <script>
     import {PROFILE_SUCCESS} from '@/modules/constants'
-    import {formToJson, HTTP} from '@/utils'
-
+    import {formToJson, HTTP,validateMobile} from '@/utils'
+    import { required } from 'vuelidate/lib/validators'
     export default {
         name: 'ProfileBase',
         data() {
             return {
                 status:'default'
             }
+        },
+        validations:{
+          $parent:{
+              user:{
+                  profile:{
+                      mobile:{
+                          required,
+                          validateMobile
+                      }
+                  }
+              }
+          }
         },
         methods: {
             onSubmit: function (e) {

@@ -3,6 +3,7 @@ import moment from 'moment-jalaali';
 import XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 
+
 // export const BASE_URL='http://api.mashruh.ir/';
 export const BASE_URL = 'http://localhost:8000/';
 export const HTTP = axios.create({
@@ -131,3 +132,17 @@ export function formToJson(form) {
     }
     return result;
 }
+
+export const validateMobile = mobile => {
+    if (mobile.toString().length === 0) {
+        return true
+    }
+    if (mobile.toString().length !== 11) {
+        return false
+    }
+    if(mobile.toString().charAt(0)!=='0'){
+        return false
+    }
+    return /^\d+$/.test(mobile.toString())
+}
+
