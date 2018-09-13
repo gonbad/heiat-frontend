@@ -4,7 +4,11 @@
 
 <template>
     <div>
-       u
+        <label>
+        </label>
+        <input type="text" v-model="$parent.user.email"/>
+        <button @click="update">ذخیره</button>
+
     </div>
 
 </template>
@@ -15,21 +19,39 @@
 
 <script>
     import {AUTH_REQUEST} from '@/modules/constants'
+    import {formToJson} from '@/utils'
 
     export default {
-        name: 'Profile',
-        data () {
+        name: 'ProfileUser',
+        data() {
             return {
-                username: '4900152234',
-                password: '2rooohet',
+                // edited: this.$store.getters.getProfile || {},
+                // bo:'ff'
             }
         },
+        // created(){
+        //     this.$store.watch((state, getters) => getters.getProfile, () => {
+        //         this.edited=this.$store.getters.getProfile
+        //     })
+        // },
+        // computed: {
+        //     user: {
+        //         get() {
+        //             return this.$store.getters.getProfile
+        //         },
+        //         set(value) {
+        //             this.edited = value;
+        //             console.log(value)
+        //         }
+        //     }
+        // },
         methods: {
-            login: function () {
-                const { username, password } = this
-                this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-                    this.$router.push('/')
-                })
+            update: function (e) {
+                console.log(this.$parent.user);
+                e.preventDefault();
+            }, forms: function (e) {
+                e.preventDefault();
+                console.log(formToJson(e.target))
             }
         },
     }

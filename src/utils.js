@@ -4,15 +4,15 @@ import XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 
 // export const BASE_URL='http://api.mashruh.ir/';
-export const BASE_URL='http://localhost:8000/';
+export const BASE_URL = 'http://localhost:8000/';
 export const HTTP = axios.create({
-  baseURL: BASE_URL,
-  // headers: {
-  //   Authorization: 'Bearer {token}'
-  // }
+    baseURL: BASE_URL,
+    // headers: {
+    //   Authorization: 'Bearer {token}'
+    // }
 });
 
-const apiCall=HTTP;
+const apiCall = HTTP;
 
 export function exportExcel(list) {
 
@@ -42,74 +42,75 @@ export function exportExcel(list) {
 
 
 export function persianStringToNumber(string) {
-  switch (string){
-      case 'اول':
-        return 1;
-      case 'دوم':
-        return 2;
-      case 'سوم':
-        return 3;
-      case 'چهارم':
-        return 4;
-      case 'پنجم':
-        return 5;
-      case 'ششم':
-        return 6;
-      case 'هفتم':
-        return 7;
-      case 'هشتم':
-        return 8;
-      case 'نهم':
-        return 9;
-      case 'دهم':
-        return 10;
-      case 'یازدهم':
-          return 11;
-       case 'دوازدهم':
-          return 12;
-       case 'سیزدهم':
-          return 13;
-       case 'چهاردهم':
-          return 14;
-       case 'پانزدهم':
-          return 15;
-       case 'شانزدهم':
-          return 16;
-       case 'هفدهم':
-          return 17;
-       case 'هجدهم':
-          return 18;
-       case 'نوزدهم':
-          return 19;
-       case 'بیستم':
-          return 20;
-       case 'بیست و یکم':
-          return 21;
-       case 'بیست و دوم':
-          return 22;
-       case 'بیست و سوم':
-          return 23;
-       case 'بیست و چهارم':
-          return 24;
-      default:
-        return 0
-  }
+    switch (string) {
+        case 'اول':
+            return 1;
+        case 'دوم':
+            return 2;
+        case 'سوم':
+            return 3;
+        case 'چهارم':
+            return 4;
+        case 'پنجم':
+            return 5;
+        case 'ششم':
+            return 6;
+        case 'هفتم':
+            return 7;
+        case 'هشتم':
+            return 8;
+        case 'نهم':
+            return 9;
+        case 'دهم':
+            return 10;
+        case 'یازدهم':
+            return 11;
+        case 'دوازدهم':
+            return 12;
+        case 'سیزدهم':
+            return 13;
+        case 'چهاردهم':
+            return 14;
+        case 'پانزدهم':
+            return 15;
+        case 'شانزدهم':
+            return 16;
+        case 'هفدهم':
+            return 17;
+        case 'هجدهم':
+            return 18;
+        case 'نوزدهم':
+            return 19;
+        case 'بیستم':
+            return 20;
+        case 'بیست و یکم':
+            return 21;
+        case 'بیست و دوم':
+            return 22;
+        case 'بیست و سوم':
+            return 23;
+        case 'بیست و چهارم':
+            return 24;
+        default:
+            return 0
+    }
 
 }
-export  function objectToQueryString(obj) {
+
+export function objectToQueryString(obj) {
     let str = [];
 
     for (var p in obj) {
         if (obj.hasOwnProperty(p) && obj[p] !== undefined && obj[p] !== null && obj[p] !== '') {
             let property = encodeURIComponent(p);
-            let value=obj[p];
-            if(property.startsWith('list__')){
-                property=property.replace('list__','');
-                value=value.join(',');
+            let value = obj[p];
+            if (property.startsWith('list__')) {
+                property = property.replace('list__', '');
+                value = value.join(',');
             }
-            if(property.startsWith('jalali__')){
-                property=property.replace('jalali__','');
-                value=moment(value, 'jYYYY/jM/jD').format('YYYY-MM-DD')
+            if (property.startsWith('jalali__')) {
+                property = property.replace('jalali__', '');
+                value = moment(value, 'jYYYY/jM/jD').format('YYYY-MM-DD')
             }
             if (property.endsWith('__ne')) {
                 property = property.substring(0, property.length - 4);
@@ -120,4 +121,13 @@ export  function objectToQueryString(obj) {
         }
     }
     return str.join('&');
+}
+
+export function formToJson(form) {
+    let fd = new FormData(form);
+    var result = {};
+    for (var entry of fd.entries()) {
+        result[entry[0]] = entry[1];
+    }
+    return result;
 }

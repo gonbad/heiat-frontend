@@ -1,5 +1,5 @@
 {
-  "name": "هیات الزهرا",
+  "name": "heiat",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -17,14 +17,18 @@
     "persianjs": "^0.4.0",
     "vue": "^2.5.17",
     "vue-router": "^3.0.1",
+    "vue2-persian-datepicker": "^2.0.1",
     "vuex": "^3.0.1",
     "xlsx": "^0.14.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",
     "@vue/cli-service": "^3.0.3",
+    "cache-loader": "^1.2.2",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.5.17"
   },
   "postcss": {

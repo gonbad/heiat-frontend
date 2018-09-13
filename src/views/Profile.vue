@@ -25,17 +25,14 @@
         name: 'Profile',
         data () {
             return {
-                username: '4900152234',
-                password: '2rooohet',
+                user:{...this.$store.getters.getProfile} || {}
             }
         },
-        methods: {
-            login: function () {
-                const { username, password } = this
-                this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-                    this.$router.push('/')
-                })
-            }
+        created(){
+            this.$store.watch((state, getters) => getters.getProfile, () => {
+                console.log(this.$store.getters.getProfile);
+                this.user={...this.$store.getters.getProfile}
+            })
         },
     }
 </script>
