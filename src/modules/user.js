@@ -4,7 +4,7 @@ import Vue from 'vue'
 import _ from 'lodash';
 import moment from 'moment-jalaali'
 
-const state = { status: '', user: {profile:{}} }
+const state = { status: '', user: {profile:{people_type:'other'}} }
 
 const getters = {
   getUser: state => _.merge(state.user,{profile:{jalali__birth_date:(state.user.profile.birth_date?moment(state.user.profile.birth_date,'YYYY-MM-DD').format('jYYYY/jM/jD'):'1370/6/7')}}),
