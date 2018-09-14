@@ -17,6 +17,11 @@
             حساب کاربری ندارید؟ هم‌اکنون
             <router-link :to="{name:'SignUp'}">ایجاد کنید</router-link>
         </p>
+        <p>
+            <router-link :to="{name:'ResetPassword'}">
+                گذرواژه خود را فراموش کرده‌اید؟
+            </router-link>
+        </p>
     </div>
 </template>
 

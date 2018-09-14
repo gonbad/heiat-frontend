@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
 import Login from './views/Login.vue'
+import ResetPassword from './views/ResetPassword'
+import ResetPasswordConfirm from './views/ResetPasswordConfirm'
 import SignUp from './views/SignUp'
 import Activate from './views/Activate'
 import Profile from './views/Profile.vue'
@@ -26,6 +28,16 @@ export default new Router({
             path: '/login',
             name: 'Login',
             component: Login
+        },
+        {
+            path: '/password/reset/confirm/:uid/:token',
+            name: 'ResetPasswordConfirm',
+            component: ResetPasswordConfirm
+        },
+        {
+            path: '/password/reset',
+            name: 'ResetPassword',
+            component: ResetPassword
         },
         {
             path: '/signup',
