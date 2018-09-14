@@ -48,7 +48,7 @@ const mutations = {
     state.status = 'error'
   },
   [AUTH_LOGOUT]: (state) => {
-    state.profile = {}
+    state.user = {}
   }
 }
 

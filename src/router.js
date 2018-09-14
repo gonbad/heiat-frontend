@@ -12,8 +12,25 @@ import ProfileCouple from './views/ProfileCouple'
 import ProfileBase from './views/ProfileBase'
 import ProfilePassport from './views/ProfilePassport'
 import ProfileChangePassword from './views/ProfileChangePassword'
+import store from '@/store'
 
 Vue.use(Router)
+
+const ifNotAuthenticated = (to, from, next) => {
+    if (!store.getters.isAuthenticated) {
+        next()
+        return
+    }
+    next('/profile')
+}
+
+const ifAuthenticated = (to, from, next) => {
+    if (store.getters.isAuthenticated) {
+        next()
+        return
+    }
+    next('/login')
+}
 
 export default new Router({
     mode: 'history',
@@ -27,22 +44,25 @@ export default new Router({
         {
             path: '/login',
             name: 'Login',
-            component: Login
+            component: Login,
+            beforeEnter: ifNotAuthenticated,
         },
         {
             path: '/password/reset/confirm/:uid/:token',
             name: 'ResetPasswordConfirm',
-            component: ResetPasswordConfirm
+            component: ResetPasswordConfirm,
         },
         {
             path: '/password/reset',
             name: 'ResetPassword',
-            component: ResetPassword
+            component: ResetPassword,
+            beforeEnter: ifNotAuthenticated,
         },
         {
             path: '/signup',
             name: 'SignUp',
-            component: SignUp
+            component: SignUp,
+            beforeEnter: ifNotAuthenticated,
         },
         {
             path: '/activate/:uid/:token',
@@ -52,6 +72,7 @@ export default new Router({
         {
             path: '/profile/',
             component: Profile,
+            beforeEnter: ifAuthenticated,
             children: [
 
                 {
