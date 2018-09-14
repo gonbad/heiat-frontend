@@ -64,7 +64,7 @@
 
 <script>
     import {HTTP} from '@/utils'
-    import {validateMelliCode} from "../utils/validators";
+    import {validateMelliCode} from "../../utils/validators";
     import {required} from 'vuelidate/lib/validators'
 
     export default {

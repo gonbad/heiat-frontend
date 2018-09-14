@@ -18,6 +18,7 @@
 
             </b-collapse>
         </b-navbar>
+        <br>
         <router-view></router-view>
     </div>
 </template>

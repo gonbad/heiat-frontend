@@ -29,7 +29,7 @@
 </style>
 
 <script>
-    import {HTTP} from "../utils";
+    import {HTTP} from "../../utils/index";
 
     export default {
         name: 'Profile',
