@@ -1,4 +1,4 @@
-import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS } from '../utils/constants'
+import { USER_REQUEST, USER_ERROR, USER_SUCCESS,AUTH_LOGOUT,PROFILE_SUCCESS,COUPLE_SUCCESS } from '../utils/constants'
 import {HTTP} from '@/utils'
 import Vue from 'vue'
 import _ from 'lodash';
@@ -38,6 +38,11 @@ const mutations = {
   [PROFILE_SUCCESS]: (state, resp) => {
     state.status = 'success'
     state['user']['profile']=resp;
+  },
+  [COUPLE_SUCCESS]: (state, resp) => {
+    state.status = 'success'
+    state['user']['profile']['couple']=resp;
+    //   state=_.merge(state,{user:{profile:{couple:resp}}})
   },
   [USER_ERROR]: (state) => {
     state.status = 'error'

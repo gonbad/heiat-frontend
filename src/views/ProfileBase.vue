@@ -44,7 +44,7 @@
                               v-if="$parent.user.profile.people_type==='sharif student'||$parent.user.profile.people_type.startsWith('sharif graduated')">
                     <b-form-input type="number"
                                   v-model="$parent.user.profile.student_number"
-                                  placeholder="تلفن همراه خود را وارد کنید">
+                                  placeholder="شماره دانشجویی خود را وارد کنید">
                     </b-form-input>
                     <span class="error" v-if="!$v.$parent.user.profile.student_number.required">شماره دانشجویی الزامی است</span>
                     <span class="error" v-if="!$v.$parent.user.profile.student_number.validateStudentNumber">فرمت شماره دانشجویی درست نیست</span>

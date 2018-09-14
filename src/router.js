@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Login from './views/Login.vue'
 import Profile from './views/Profile.vue'
 import ProfileUser from './views/ProfileUser'
+import ProfileCouple from './views/ProfileCouple'
 import ProfileBase from './views/ProfileBase'
 import ProfilePassport from './views/ProfilePassport'
 import ProfileChangePassword from './views/ProfileChangePassword'
@@ -43,7 +44,13 @@ export default new Router({
                     path: 'user',
                     name: 'Profile.User',
                     component: ProfileUser
-                },{
+                },
+                {
+                    path: 'couple',
+                    name: 'Profile.Couple',
+                    component: ProfileCouple
+                },
+                {
                     path: '',
                     name: 'Profile.Base',
                     component: ProfileBase

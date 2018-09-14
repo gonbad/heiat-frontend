@@ -26,3 +26,18 @@ export const validateStudentNumber = number => {
     return /^\d+$/.test(number.toString())
 }
 
+
+export const validateMelliCode = number => {
+    if (!number || number === '') {
+        return true
+    }
+    if (number.toString().length !== 10) {
+        return false
+    }
+
+    if(! /^\d+$/.test(number.toString())){
+        return false
+    }
+    return true
+}
+
