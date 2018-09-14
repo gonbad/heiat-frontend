@@ -8,9 +8,9 @@ import FileSaver from 'file-saver';
 export const BASE_URL = 'http://localhost:8000/';
 export const HTTP = axios.create({
     baseURL: BASE_URL,
-    // headers: {
-    //   Authorization: 'Bearer {token}'
-    // }
+    headers: {
+        'Accept-Language': 'fa-ir'
+    }
 });
 
 const apiCall = HTTP;

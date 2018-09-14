@@ -4,8 +4,32 @@
 
 <template>
     <div>
-       cp
+        <br>
+        <b-container>
+            <b-form @submit="onSubmit">
+                <b-form-group label="گذرواژه فعلی:">
+                    <b-form-input v-model="current_password" type="password"
+                                  placeholder="گذرواژه فعلی خود را وارد کنید">
+                    </b-form-input>
+                    <span class="error" v-for="e in error.current_password">{{e}}</span>
+                </b-form-group>
+                <b-form-group label="گذرواژه جدید:">
+                    <b-form-input v-model="new_password" type="password"
+                                  placeholder="گذرواژه جدید را وارد کنید">
+                    </b-form-input>
+                    <span class="error" v-for="e in error.new_password">{{e}}</span>
+                </b-form-group>
+                <b-button type="submit" variant="primary" :disabled="status==='sending'">
+                    <span v-show="status==='default'">ذخیره</span>
+                    <span v-show="status==='sending'">در حال ارسال</span>
+                    <span v-show="status==='saved'">ذخیره شد</span>
+                    <span v-show="status==='error'">با خطا مواجه شد</span>
+                </b-button>
+            </b-form>
+
+        </b-container>
     </div>
+
 </template>
 
 <style>
@@ -13,21 +37,34 @@
 </style>
 
 <script>
-    import {AUTH_REQUEST} from '@/utils/constants'
+    import {HTTP} from '@/utils'
+
 
     export default {
-        name: 'Profile',
-        data () {
+        name: 'ProfileCouple',
+        data() {
             return {
-                username: '4900152234',
-                password: '2rooohet',
+                status: 'default',
+                current_password: '',
+                new_password: '',
+                error: {
+                    current_password:[],
+                    new_password: []
+                }
             }
         },
         methods: {
-            login: function () {
-                const { username, password } = this
-                this.$store.dispatch(AUTH_REQUEST, { username, password }).then(() => {
-                    this.$router.push('/')
+            onSubmit: function (e) {
+                e.preventDefault();
+                this.status = 'sending';
+                HTTP.post('auth/password/', {'current_password': this.current_password,'new_password': this.new_password}).then(resp => {
+                    console.log(resp.data);
+                    this.status = 'saved'
+                }).catch(error => {
+                    if (error.response) {
+                        this.error = error.response.data
+                        this.status = 'error'
+                    }
                 })
             }
         },
