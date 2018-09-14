@@ -13,6 +13,10 @@
             <hr/>
             <button type="submit">Login</button>
         </form>
+        <p>
+            حساب کاربری ندارید؟ هم‌اکنون
+            <router-link :to="{name:'SignUp'}">ایجاد کنید</router-link>
+        </p>
     </div>
 </template>
 

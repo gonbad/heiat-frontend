@@ -13,7 +13,8 @@
                     </b-form-input>
                     <span class="error" v-for="e in error.current_password">{{e}}</span>
                 </b-form-group>
-                <b-form-group label="گذرواژه جدید:">
+                <b-form-group label="گذرواژه جدید:"
+                description="گذرواژه باید حداقل ۸ حرف باشد و ترکیبی از اعداد و حروف باشد">
                     <b-form-input v-model="new_password" type="password"
                                   placeholder="گذرواژه جدید را وارد کنید">
                     </b-form-input>
