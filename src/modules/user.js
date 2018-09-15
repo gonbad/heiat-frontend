@@ -15,7 +15,7 @@ const getters = {
 const actions = {
     [USER_REQUEST]: ({commit, dispatch}) => {
         commit(USER_REQUEST)
-        HTTP.get('auth/users/me')
+        HTTP.get('auth/users/me/')
             .then(resp => {
                 commit(USER_SUCCESS, resp.data)
                 console.log(resp.data.email);

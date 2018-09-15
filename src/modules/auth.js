@@ -14,7 +14,7 @@ const actions = {
     [AUTH_REQUEST]: ({commit, dispatch}, user) => {
         return new Promise((resolve, reject) => {
             commit(AUTH_REQUEST)
-            HTTP.post('auth/token/login', user)
+            HTTP.post('auth/token/login/', user)
                 .then(resp => {
                     console.log(resp);
                     localStorage.setItem('user-token', resp.data.auth_token)

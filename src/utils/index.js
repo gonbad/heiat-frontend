@@ -3,9 +3,9 @@ import moment from 'moment-jalaali';
 import XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 
-
-// export const BASE_URL='http://api.mashruh.ir/';
-export const BASE_URL = 'http://localhost:8000/';
+var host = window.location.hostname;
+export const BASE_URL = 'http://'+host+'/api/';
+// export const BASE_URL = 'http://localhost:8000/';
 export const HTTP = axios.create({
     baseURL: BASE_URL,
     headers: {
