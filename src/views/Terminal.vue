@@ -20,7 +20,10 @@
                 <span v-show="status==='sending'">در حال انجام</span>
             </b-button>
         </b-form>
-
+        <form ref="hiddenForm" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" method="POST">
+            <input type="hidden" name="RefId" :value="refId">
+            <input type="submit" value="go" style="display: none;">
+        </form>
     </div>
 </template>
 
@@ -37,7 +40,8 @@
                 fixed: false,
                 fix_expense_name: '',
                 amount: '',
-                status:'default'
+                status:'default',
+                refId:''
             }
         },
         created() {
@@ -69,10 +73,10 @@
             onSubmit: function (e) {
                 e.preventDefault();
                 this.status = 'sending';
-                HTTP.patch('accounts/profile/', this.$parent.user.profile).then(resp => {
+                HTTP.post('terminal/start/', {'amount':this.amount,'expense_id':this.expense_id}).then(resp => {
                     console.log(resp.data);
-                    this.$store.commit(PROFILE_SUCCESS, resp.data);
-                    this.status = 'saved'
+                    this.refId=resp.data
+                    this.$refs.hiddenForm.submit();
                 })
             },
         }
