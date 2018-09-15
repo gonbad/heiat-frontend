@@ -10,6 +10,12 @@
 
 
                 <!-- Right aligned nav items -->
+                <b-navbar-nav class="mr-auto">
+                    <b-nav-item  :to="{ name: 'About' }">درباره ما</b-nav-item>
+                    <b-nav-item  :to="{ name: 'Terminal' }">مشارکت در هزینه‌های هیئت</b-nav-item>
+                </b-navbar-nav>
+
+                <!-- left aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item v-if="!isAuthenticated && !authLoading" :to="{ name: 'Login' }">ورود</b-nav-item>
                     <b-nav-item v-if="isProfileLoaded" to="/profile">{{getUser.first_name}} {{getUser.last_name}}</b-nav-item>
