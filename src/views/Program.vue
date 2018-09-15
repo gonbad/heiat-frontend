@@ -1,6 +1,10 @@
 <template>
     <div dir="rtl">
- bkew
+        <b-nav fill tabs v-if="hasRegistration">
+            <b-nav-item :to="{name:'Program.Main'}" exact>اطلاعات اصلی</b-nav-item>
+            <b-nav-item :to="{name:'Program.Payments'}">گزارش مالی</b-nav-item>
+        </b-nav>
+        <br>
             <router-view></router-view>
         </div>
 </template>
@@ -13,8 +17,13 @@
         data() {
             return {
                 program: {
-                    posts:[]
-                }
+                    posts:[],
+                    registration:{
+                        payments:[],
+                        messages:[]
+                    }
+                },
+                hasRegistration:false
             }
         },
 
@@ -27,6 +36,9 @@
                 HTTP.get('programs/' + this.$route.params.program_id + '/?format=json')
                     .then((resp) => {
                         this.program = resp.data;
+                        if(this.program.registration){
+                            this.hasRegistration=true
+                        }
                     })
                     .catch((err) => {
                         console.log(err)
