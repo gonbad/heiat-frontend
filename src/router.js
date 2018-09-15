@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
+import Program from './views/Program'
+import ProgramMain from './views/ProgramMain'
 import Login from './views/accounts/Login.vue'
 import ResetPassword from './views/accounts/ResetPassword'
 import ResetPasswordConfirm from './views/accounts/ResetPasswordConfirm'
@@ -99,6 +101,17 @@ export default new Router({
                     path: '',
                     name: 'Profile.Base',
                     component: ProfileBase
+                }
+            ]
+        },
+        {
+            path: '/program/:program_id',
+            component: Program,
+            children: [
+                {
+                    path: '',
+                    name: 'Program.Main',
+                    component: ProgramMain
                 }
             ]
         }
