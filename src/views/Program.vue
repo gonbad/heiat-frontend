@@ -17,6 +17,7 @@
         data() {
             return {
                 program: {
+                    is_open:false,
                     posts:[],
                     registration:{
                         payments:[],
