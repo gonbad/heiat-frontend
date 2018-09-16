@@ -15,9 +15,38 @@
                     <h1>
                         ثبت‌نام من
                     </h1>
-                    <p>
-                        در دست احداث
-                    </p>
+                    <div>
+                        <label>
+                            وضعیت:
+                        </label>
+                        <span class="answer">
+                            {{status_display}}
+                        </span>
+                    </div>
+                    <div v-if="$parent.program.has_coupling">
+                        <label>
+                            متاهلی:
+                        </label>
+                        <span class="answer">
+                            {{$parent.program.registration.coupling?'بله':'خیر'}}
+                        </span>
+                    </div>
+                    <div v-if="!!$parent.program.registration.sum_payed">
+                        <label>
+                            مجموع پرداختی تاکنون:
+                        </label>
+                        <span class="answer">
+                            {{$parent.program.registration.sum_payed | pNumber}}
+                            تومان
+                        </span>
+                    </div>
+                    <div v-if="$parent.program.registration.status==='certain' && !!$parent.program.registration.next_installment">
+                        <b-button @click="pay" variant="success">
+                            پرداخت مبلغ
+                            {{$parent.program.registration.next_installment | pNumber}}
+                            تومان
+                        </b-button>
+                    </div>
                 </div>
                 <div v-else>
                     <h1>
@@ -50,6 +79,7 @@
 <script>
     import {HTTP} from '../utils/index';
     import {mapGetters, mapState} from 'vuex'
+    import {STATUS_CHOICES} from '@/utils/choices'
 
 
     export default {
@@ -58,12 +88,21 @@
         data() {
             return {}
         },
-        methods: {},
+        methods: {
+            pay() {
+                console.log(this.$parent.program.registration.next_installment)
+            }
+        },
         computed: {
-            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded','isProfileCompleted'])
+            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted']),
+            status_display: function () {
+                return STATUS_CHOICES[this.$parent.program.registration.status]
+            }
         }
     }
 </script>
 <style>
-
+    .answer {
+        font-weight: bold;
+    }
 </style>

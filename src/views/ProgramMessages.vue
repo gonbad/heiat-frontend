@@ -1,5 +1,4 @@
 <template>
-    <div class="container">
         <div class="container">
             <h3 class=" text-center">جعبه پیام‌ها</h3>
             <div class="messaging">
@@ -19,7 +18,7 @@
                                         </span></div>
                                 </div>
                             </div>
-                            <div class="type_msg">
+                            <div v-if="$parent.program.state==='active'" class="type_msg">
                                 <div class="input_msg_write">
                                     <input type="text" class="write_msg" placeholder="Type a message"/>
                                     <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
@@ -31,7 +30,6 @@
                 </div>
             </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -194,8 +192,5 @@
         padding: 0 0 50px 0;
     }
 
-    .msg_history {
-        height: 516px;
-        overflow-y: auto;
-    }
+
 </style>

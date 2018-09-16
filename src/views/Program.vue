@@ -21,8 +21,10 @@
             return {
                 program: {
                     is_open:false,
+                    state:'active',
                     posts:[],
                     registration:{
+                        status:'default',
                         payments:[],
                         messages:[]
                     }
