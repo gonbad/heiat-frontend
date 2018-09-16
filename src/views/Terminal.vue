@@ -73,7 +73,7 @@
             onSubmit: function (e) {
                 e.preventDefault();
                 this.status = 'sending';
-                HTTP.post('terminal/start/', {'amount': this.amount, 'expense_id': this.expense_id}).then(resp => {
+                HTTP.post('pay/terminal/start/', {'amount': this.amount, 'expense_id': this.expense_id}).then(resp => {
                     console.log(resp.data);
                     this.refId = resp.data
                     this.$refs.refref.value = resp.data

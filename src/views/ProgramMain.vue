@@ -49,10 +49,24 @@
                         </span>
                     </div>
                     <div v-if="$parent.program.registration.status==='certain' && !!$parent.program.registration.next_installment">
-                        <b-button @click="pay" variant="success">
+                        <b-button @click="pay" variant="success" :disabled="status==='sending'">
+                            <span v-show="status==='default'">
                             پرداخت مبلغ
                             {{$parent.program.registration.next_installment | pNumber}}
                             تومان
+                            </span>
+                            <span v-show="status==='sending'">
+                           درحال انجام
+                            </span>
+                            <span v-show="status==='error'">
+                           پرداخت با مشکل مواجه شد
+                            </span>
+
+                        </b-button>
+                    </div>
+                    <div v-if="$parent.program.registration.status==='certain' || $parent.program.registration.status==='default' || $parent.program.registration.status==='reserved'">
+                        <b-button @click="giveUp" variant="danger">
+                            انصراف
                         </b-button>
                     </div>
                 </div>
@@ -82,7 +96,12 @@
                 </div>
             </b-col>
         </b-row>
+        <form ref="hiddenForm" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" method="POST">
+            <input ref="refref" type="hidden" name="RefId" :value="refId">
+            <input type="submit" value="go" style="display: none;">
+        </form>
     </div>
+
 </template>
 <script>
     import {HTTP} from '../utils/index';
@@ -94,11 +113,31 @@
         name: 'ProgramMain',
 
         data() {
-            return {}
+            return {
+                status: 'default',
+                refId:''
+            }
         },
         methods: {
             pay() {
-                console.log(this.$parent.program.registration.next_installment)
+                this.status = 'sending'
+                HTTP.post('pay/registration/start/', {'registration_id': this.$parent.program.registration.id}).then(resp => {
+                    console.log(resp.data);
+                    this.refId = resp.data
+                    this.$refs.refref.value = resp.data
+                    console.log(formToJson(this.$refs.hiddenForm))
+                    this.$refs.hiddenForm.submit();
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
+            giveUp() {
+                this.$dialog.confirm('آیا مطمئنید که می‌خواهید انصراف بدهید؟').then(function (dialog) {
+                    console.log('Clicked on proceed');
+                })
+                    .catch(function () {
+                        console.log('Clicked on cancel');
+                    });
             }
         },
         computed: {

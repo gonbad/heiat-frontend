@@ -12,7 +12,10 @@ import 'font-awesome/css/font-awesome.css';
 import './omid.css';
 import PDatePicker from 'vue2-persian-datepicker'
 import Vuelidate from 'vuelidate'
+import VuejsDialog from 'vuejs-dialog';
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
+Vue.use(VuejsDialog);
 Vue.use(BootstrapVue);
 Vue.component('pdatepicker', PDatePicker)
 Vue.use(Vuelidate)
