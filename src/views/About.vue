@@ -1,6 +1,96 @@
 <template>
-    <div>
-        در دست احداث
+    <div class="container">
+       <div class="qa">
+           <div class="question-item">
+آیا برای هر برنامه باید اطلاعات شخصی خود(نام و کد ملی و...) را وارد کنم؟
+           </div>
+           <div class="answer-item">
+خیر! تنها یک بار اطلاعات شخصی خود را وارد می‌کنید و برای هر برنامه فقط اطلاعات مختص آن برنامه-مانند شرکت به صورت مجردی یا متاهلی- را وارد می‌کنید.
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+راه‌های ارتباطی با مسئولان چیست؟
+           </div>
+           <div class="answer-item">
+برای گزارش مشکلات فنی و ارائه پیشنهادات می‌توانید به شناسه @omidbaharloo در پیام‌رسان بله پیام بفرستید.
+               <br>
+               و نیز سوالات و مشکلات خود در مورد برنامه‌ها را نیز می‌توانید از طریق کانال‌های ارتباطی مختص هر برنامه-که در اطلاعیه‌ها می‌آید- پیگیری کنید.
+<br>
+               یکی از این کانال‌های ارتباطی مختص هر برنامه صندوق ورودی است که پس از ثبت‌نام در برنامه قابل استفاده است.
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+در صورت فشردن دگمه انصراف چه اتفاقی می‌افتد؟
+           </div>
+           <div class="answer-item">
+وضعیت شما به انصراف تغییر کرده و امکان ثبت‌نام مجدد در برنامه را نیز نخواهید داشت. همچنین اگر به صورت متاهلی در برنامه شرکت کرده باشید، وضعیت همسر شما نیز به
+               <span style="color: red">
+                   انصراف
+               </span>
+               .تغییر می‌کند
+               <br>
+               پیشنهاد می‌کنیم اگر قصد تغییر وضعیت دارید با مسئولان برنامه مطرح کنید
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
+        <div class="qa">
+           <div class="question-item">
+
+           </div>
+           <div class="answer-item">
+
+           </div>
+           <hr>
+       </div>
 
     </div>
 </template>
@@ -10,3 +100,8 @@
         name: 'About',
     }
 </script>
+<style>
+    .question-item{
+        font-weight: bold;
+    }
+</style>

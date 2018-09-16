@@ -11,7 +11,7 @@
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="mr-auto">
-                    <b-nav-item  :to="{ name: 'About' }">درباره ما</b-nav-item>
+                    <b-nav-item  :to="{ name: 'About' }">سوالات متداول</b-nav-item>
                     <b-nav-item  :to="{ name: 'Terminal' }">مشارکت در هزینه‌های هیئت</b-nav-item>
                 </b-navbar-nav>
 
