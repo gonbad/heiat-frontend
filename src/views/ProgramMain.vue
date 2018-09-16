@@ -115,7 +115,7 @@
         data() {
             return {
                 status: 'default',
-                refId:''
+                refId: ''
             }
         },
         methods: {
@@ -132,12 +132,11 @@
                 })
             },
             giveUp() {
-                this.$dialog.confirm('آیا مطمئنید که می‌خواهید انصراف بدهید؟').then(function (dialog) {
-                    console.log('Clicked on proceed');
-                })
-                    .catch(function () {
-                        console.log('Clicked on cancel');
-                    });
+                this.$dialog.confirm('آیا مطمئنید که می‌خواهید انصراف بدهید؟').then(dialog=> {
+                        HTTP.post('registration/give_up/', {'registration_id': this.$parent.program.registration.id}).then(resp => {
+                            this.$parent.program.registration.status = 'given up'
+                        })
+                });
             }
         },
         computed: {
