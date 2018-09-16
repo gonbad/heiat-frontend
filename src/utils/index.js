@@ -3,10 +3,10 @@ import moment from 'moment-jalaali';
 import XLSX from 'xlsx';
 import FileSaver from 'file-saver';
 
-// var host = window.location.hostname;
-var host = 'account.azzahraa.sharif.ir';
-export const BASE_URL = 'http://'+host+'/api/';
-// export const BASE_URL = 'http://localhost:8000/';
+var host = window.location.hostname;
+// var host = 'account.azzahraa.sharif.ir';
+// export const BASE_URL = 'http://'+host+'/api/';
+export const BASE_URL = 'http://localhost:8000/';
 export const HTTP = axios.create({
     baseURL: BASE_URL,
     headers: {

@@ -1,8 +1,11 @@
 <template>
     <div dir="rtl">
         <b-nav fill tabs v-if="hasRegistration">
-            <b-nav-item :to="{name:'Program.Main'}" exact>اطلاعات اصلی</b-nav-item>
+            <b-nav-item :to="{name:'Program.Main'}" exact>{{program.title}}</b-nav-item>
             <b-nav-item :to="{name:'Program.Payments'}">گزارش مالی</b-nav-item>
+            <b-nav-item :to="{name:'Program.Messages'}">
+                پیام‌ها({{program.registration.messages.length | pNumber}})
+            </b-nav-item>
         </b-nav>
         <br>
             <router-view></router-view>

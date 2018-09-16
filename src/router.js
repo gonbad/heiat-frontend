@@ -4,6 +4,7 @@ import Home from './views/Home.vue'
 import Program from './views/Program'
 import ProgramMain from './views/ProgramMain'
 import ProgramPayments from './views/ProgramPayments'
+import ProgramMessages from './views/ProgramMessages'
 import Login from './views/accounts/Login.vue'
 import ResetPassword from './views/accounts/ResetPassword'
 import ResetPasswordConfirm from './views/accounts/ResetPasswordConfirm'
@@ -118,6 +119,11 @@ export default new Router({
                     path: 'payments',
                     name: 'Program.Payments',
                     component: ProgramPayments
+                },
+                {
+                    path: 'messages',
+                    name: 'Program.Messages',
+                    component: ProgramMessages
                 },
             ]
         },
