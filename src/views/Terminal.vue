@@ -76,7 +76,7 @@
                 HTTP.post('terminal/start/', {'amount':this.amount,'expense_id':this.expense_id}).then(resp => {
                     console.log(resp.data);
                     this.refId=resp.data
-                    this.$refs.hiddenForm.submit();
+                    // this.$refs.hiddenForm.submit();
                 })
             },
         }
