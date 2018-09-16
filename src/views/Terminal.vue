@@ -2,7 +2,7 @@
     <div class="container">
         <b-form @submit="onSubmit" v-if="status!=='success'">
             <h2 v-if="fixed">
-               {{fix_expense_name}}
+                {{fix_expense_name}}
             </h2>
             <b-form-group v-if="!fixed" label="مورد مصرف:">
                 <b-form-select v-model="expense_id" :options="expenses"/>
@@ -21,14 +21,14 @@
             </b-button>
         </b-form>
         <form ref="hiddenForm" action="https://bpm.shaparak.ir/pgwchannel/startpay.mellat" method="POST">
-            <input type="hidden" name="RefId" :value="refId">
+            <input ref="refref" type="hidden" name="RefId" :value="refId">
             <input type="submit" value="go" style="display: none;">
         </form>
     </div>
 </template>
 
 <script>
-    import {HTTP} from '@/utils'
+    import {HTTP, formToJson} from '@/utils'
     import _ from 'lodash'
 
     export default {
@@ -40,8 +40,8 @@
                 fixed: false,
                 fix_expense_name: '',
                 amount: '',
-                status:'default',
-                refId:''
+                status: 'default',
+                refId: ''
             }
         },
         created() {
@@ -56,7 +56,7 @@
             fetchData() {
                 HTTP.get('expenses?format=json')
                     .then((resp) => {
-                        this.expenses =_.mapValues(_.keyBy(resp.data, 'id'), 'expense_name')
+                        this.expenses = _.mapValues(_.keyBy(resp.data, 'id'), 'expense_name')
                         console.log(JSON.stringify(this.expenses))
                         if (this.fixed) {
                             this.fix_expense_name = this.expenses[this.expense_id]
@@ -73,10 +73,12 @@
             onSubmit: function (e) {
                 e.preventDefault();
                 this.status = 'sending';
-                HTTP.post('terminal/start/', {'amount':this.amount,'expense_id':this.expense_id}).then(resp => {
+                HTTP.post('terminal/start/', {'amount': this.amount, 'expense_id': this.expense_id}).then(resp => {
                     console.log(resp.data);
-                    this.refId=resp.data
-                    // this.$refs.hiddenForm.submit();
+                    this.refId = resp.data
+                    this.$refs.refref.value = resp.data
+                    console.log(formToJson(this.$refs.hiddenForm))
+                    this.$refs.hiddenForm.submit();
                 })
             },
         }
