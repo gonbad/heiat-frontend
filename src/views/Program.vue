@@ -23,10 +23,12 @@
                     is_open:false,
                     state:'active',
                     posts:[],
+                    users_questions:[],
                     registration:{
                         status:'default',
                         payments:[],
-                        messages:[]
+                        messages:[],
+                        answers:[]
                     }
                 },
                 hasRegistration:false

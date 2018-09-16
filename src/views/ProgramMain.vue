@@ -31,6 +31,14 @@
                             {{$parent.program.registration.coupling?'بله':'خیر'}}
                         </span>
                     </div>
+                    <div v-for="qa in answers">
+                        <label>
+                            {{qa.title}}:
+                        </label>
+                        <span class="answer">
+                            {{qa.yes?'بله':'خیر'}}
+                        </span>
+                    </div>
                     <div v-if="!!$parent.program.registration.sum_payed">
                         <label>
                             مجموع پرداختی تاکنون:
@@ -97,6 +105,21 @@
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted']),
             status_display: function () {
                 return STATUS_CHOICES[this.$parent.program.registration.status]
+            },
+            answers: function () {
+                return _.map(this.$parent.program.users_questions, item => {
+                    let ans = {
+                        title: item.title
+                    };
+                    let found_answer = _.find(this.$parent.program.registration.answers, {'question': item.id})
+                    if (found_answer) {
+                        ans['yes'] = found_answer.yes
+                    } else {
+                        ans['yes'] = false
+                    }
+                    return ans;
+
+                })
             }
         }
     }
