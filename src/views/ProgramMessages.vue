@@ -18,15 +18,17 @@
                                         </span></div>
                                 </div>
                             </div>
-                            <div v-if="$parent.program.state==='active'" class="type_msg">
-                                <div class="input_msg_write">
-                                    <input type="text" class="write_msg" placeholder="Type a message"/>
-                                    <button class="msg_send_btn" type="button"><i class="fa fa-paper-plane-o"
-                                                                                  aria-hidden="true"></i></button>
-                                </div>
-                            </div>
                         </div>
                     </div>
+                </div>
+                <div >
+                                <textarea v-model="newMessageText" style="width: 100%">
+
+                                </textarea>
+                    <b-button @click="send" variant="primary" :disabled="status==='sending'">
+                        <span v-show="status!=='sending'">ارسال</span>
+                        <span v-show="status==='sending'">در حال ارسال</span>
+                    </b-button>
                 </div>
             </div>
         </div>
@@ -40,7 +42,21 @@
         name: 'ProgramMessages',
         data() {
             return {
-                image:require('@/assets/logo.png')
+                image:require('@/assets/logo.png'),
+                newMessageText:'',
+                status:'default'
+            }
+        },
+        methods:{
+            send(){
+                this.status='sending';
+                HTTP.post('registration/message/', {registration:this.$parent.program.registration.id,text:this.newMessageText,to_user:false}).then(resp => {
+                    this.$parent.program.registration.messages.push(resp.data);
+                    this.status='default'
+                    this.newMessageText=''
+                }).catch(error => {
+                    this.status = 'error'
+                })
             }
         }
     }
@@ -136,7 +152,6 @@
     }
 
     .mesgs {
-        float: left;
         padding: 30px 15px 0 25px;
     }
 
