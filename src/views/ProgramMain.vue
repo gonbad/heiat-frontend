@@ -15,6 +15,7 @@
                     <h1>
                         ثبت‌نام من
                     </h1>
+                    <br>
                     <div>
                         <label>
                             وضعیت:
@@ -74,6 +75,7 @@
                     <h1>
                         ثبت‌نام
                     </h1>
+                    <br>
                     <p v-if="!$parent.program.is_open">
                         اکنون زمان ثبت‌نام نیست
                     </p>
@@ -90,9 +92,38 @@
                         </router-link>
                         خود تکمیل نکرده‌اید.
                     </p>
-                    <p v-else>
-                        در دست احداث
-                    </p>
+                    <div v-else>
+                        <div v-if="$parent.program.has_coupling && isMarried">
+                            <span class="question-item">
+                                شرکت به صورت متاهلی:
+                            </span>
+                            <input type="checkbox" v-model="newRegistration.coupling"/>
+                            <hr>
+                        </div>
+                        <div v-for="answer in newRegistration.answers">
+                            <span class="question-item">
+                              {{answer.title}}
+                                :
+                            </span>
+                            <input type="checkbox" v-model="answer.yes"/>
+                            <p>
+                                {{answer.desc}}
+                            </p>
+                            <hr>
+                        </div>
+                        <b-button variant="success" @click="register" :disabled="status==='sending'">
+                            <span v-show="status!=='sending'">
+                            ثبت‌نام در برنامه
+                            </span>
+                         <span v-show="status==='sending'">
+                           در حال انجام
+                            </span>
+                        </b-button>
+                        <p class="error" v-if="status==='error'">
+                            ثبت‌نام در برنامه با مشکل مواجه شد
+                        </p>
+
+                    </div>
                 </div>
             </b-col>
         </b-row>
@@ -115,8 +146,16 @@
         data() {
             return {
                 status: 'default',
-                refId: ''
+                refId: '',
+                newRegistration: {
+                    coupling: false,
+                    answers: []
+                }
             }
+        },
+        created() {
+            this.constructNewRegistration();
+            this.$parent.$on('fetched', this.constructNewRegistration);
         },
         methods: {
             pay() {
@@ -132,15 +171,38 @@
                 })
             },
             giveUp() {
-                this.$dialog.confirm('آیا مطمئنید که می‌خواهید انصراف بدهید؟').then(dialog=> {
-                        HTTP.post('registration/give_up/', {'registration_id': this.$parent.program.registration.id}).then(resp => {
-                            this.$parent.program.registration.status = 'given up'
-                        })
+                this.$dialog.confirm('آیا مطمئنید که می‌خواهید انصراف بدهید؟').then(dialog => {
+                    HTTP.post('registration/give_up/', {'registration_id': this.$parent.program.registration.id}).then(resp => {
+                        this.$parent.program.registration.status = 'given up'
+                    })
                 });
-            }
+            },
+            constructNewRegistration() {
+                for (let question of this.$parent.program.users_questions) {
+                    let temp = _.find(this.newRegistration.answers, {'question_id': question.id})
+                    if (!temp) {
+                        this.newRegistration.answers.push({
+                            question_id: question.id,
+                            title: question.title,
+                            desc: question.desc,
+                            yes: false
+                        })
+                    }
+                }
+                console.log(this.newRegistration)
+            },
+            register(){
+              console.log(this.newRegistration)
+                this.status = 'sending'
+                HTTP.post('program/register/'+this.$parent.program.id+'/', this.newRegistration).then(resp => {
+                    this.$parent.program.registration=resp.data;
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
         },
         computed: {
-            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted']),
+            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
             status_display: function () {
                 return STATUS_CHOICES[this.$parent.program.registration.status]
             },
@@ -164,6 +226,10 @@
 </script>
 <style>
     .answer {
+        font-weight: bold;
+    }
+
+    .question-item {
         font-weight: bold;
     }
 </style>

@@ -23,6 +23,7 @@
                     is_open:false,
                     state:'active',
                     posts:[],
+                    has_coupling:false,
                     users_questions:[],
                     registration:{
                         status:'default',
@@ -31,7 +32,6 @@
                         answers:[]
                     }
                 },
-                hasRegistration:false
             }
         },
 
@@ -45,13 +45,18 @@
                     .then((resp) => {
                         this.program = resp.data;
                         if(this.program.registration){
-                            this.hasRegistration=true
                         }
+                        this.$emit('fetched')
                     })
                     .catch((err) => {
                         console.log(err)
                     })
             }
+        },
+        computed:{
+            hasRegistration: function () {
+                return !!this.program.registration &&!!this.program.registration.id
+            },
         }
     }
 </script>
