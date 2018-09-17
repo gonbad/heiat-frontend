@@ -164,7 +164,6 @@
                     console.log(resp.data);
                     this.refId = resp.data
                     this.$refs.refref.value = resp.data
-                    console.log(formToJson(this.$refs.hiddenForm))
                     this.$refs.hiddenForm.submit();
                 }).catch(error => {
                     this.status = 'error'
