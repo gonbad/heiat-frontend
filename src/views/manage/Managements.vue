@@ -3,7 +3,7 @@
         <div class="well">
             <b-table striped hover :items="managements" :fields="fields" outlined bordered>
                 <template slot="title_id" slot-scope="data">
-                    <router-link :to="'/manage/'+data.item.id">{{data.item.program}}</router-link>
+                    <router-link :to="'/manage/'+data.item.program.id">{{data.item.program.title}}</router-link>
                 </template>
             </b-table>
         </div>
