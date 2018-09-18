@@ -141,6 +141,11 @@ export default new Router({
           path: '/pay/terminal',
           name: 'Terminal',
           component: () => import(/* webpackChunkName: "terminal" */ './views/Terminal.vue')
+        },
+        {
+          path: '/managements',
+          name: 'Managements',
+          component: () => import(/* webpackChunkName: "manage" */ './views/manage/Managements')
         }
     ]
 })

@@ -10,7 +10,8 @@ const getters = {
     getUser: state => _.merge(state.user, {profile: {jalali__birth_date: (state.user.profile.birth_date ? moment(state.user.profile.birth_date, 'YYYY-MM-DD').format('jYYYY/jM/jD') : '1370/6/7')}}),
     isProfileLoaded: state => !!state.user.username,
     isProfileCompleted: state => !!state.user.profile.mobile,
-    isMarried: state => !!state.user.profile.couple
+    isMarried: state => !!state.user.profile.couple,
+    isManager: state => state.user.profile.has_management
 }
 
 const actions = {
@@ -50,7 +51,7 @@ const mutations = {
         state.status = 'error'
     },
     [AUTH_LOGOUT]: (state) => {
-        state.user = {}
+        state.user =  {profile: {people_type: 'other'}}
     }
 }
 

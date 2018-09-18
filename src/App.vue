@@ -11,6 +11,7 @@
 
                 <!-- Right aligned nav items -->
                 <b-navbar-nav class="mr-auto">
+                    <b-nav-item  v-if="isManager" :to="{ name: 'Managements' }">مسئولیت‌های من</b-nav-item>
                     <b-nav-item  :to="{ name: 'About' }">سوالات متداول</b-nav-item>
                     <b-nav-item  :to="{ name: 'Terminal' }">مشارکت در هزینه‌های هیئت</b-nav-item>
                 </b-navbar-nav>
@@ -53,7 +54,7 @@
             }
         },
         computed: {
-            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded']),
+            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded','isManager']),
             ...mapState({
                 authLoading: state => state.auth.status === 'loading',
             })
