@@ -128,24 +128,35 @@ export default new Router({
             ]
         },
         {
-          path: '/about',
-          name: 'About',
-          component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            path: '/about',
+            name: 'About',
+            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
         },
         {
-          path: '/pay/terminal/:expense_id?',
-          name: 'Terminal',
-          component: () => import(/* webpackChunkName: "terminal" */ './views/Terminal.vue')
+            path: '/pay/terminal/:expense_id?',
+            name: 'Terminal',
+            component: () => import(/* webpackChunkName: "terminal" */ './views/Terminal.vue')
         },
         {
-          path: '/pay/terminal',
-          name: 'Terminal',
-          component: () => import(/* webpackChunkName: "terminal" */ './views/Terminal.vue')
+            path: '/pay/terminal',
+            name: 'Terminal',
+            component: () => import(/* webpackChunkName: "terminal" */ './views/Terminal.vue')
         },
         {
-          path: '/managements',
-          name: 'Managements',
-          component: () => import(/* webpackChunkName: "manage" */ './views/manage/Managements')
+            path: '/managements',
+            name: 'Managements',
+            component: () => import(/* webpackChunkName: "manage" */ './views/manage/Managements')
+        },
+        {
+            path: '/manage/:program_id',
+            component: () => import(/* webpackChunkName: "manage" */ './views/manage/Manage'),
+            children: [
+                    {
+                        path: '',
+                        name: 'Manage.Panel',
+                        component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManagePanel'),
+                    },
+            ]
         }
     ]
 })
