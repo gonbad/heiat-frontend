@@ -5,7 +5,7 @@
                 <h1>
                     اطلاعیه‌ها
                 </h1>
-                <b-card v-for="post in $parent.program.posts"
+                <b-card v-for="post in orderedPosts"
                         :footer="post.post_date | moment | jalaliWithTime | pNumber">
                     <div v-html="post.text"></div>
                 </b-card>
@@ -219,6 +219,9 @@
                     return ans;
 
                 })
+            },
+            orderedPosts(){
+                return _.orderBy(this.$parent.program.posts,'post_date','desc')
             }
         }
     }

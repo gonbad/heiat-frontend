@@ -155,6 +155,10 @@ export default new Router({
                         path: '',
                         name: 'Manage.Panel',
                         component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManagePanel'),
+                    },{
+                        path: 'posts',
+                        name: 'Manage.Posts',
+                        component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManagePosts'),
                     },
             ]
         }

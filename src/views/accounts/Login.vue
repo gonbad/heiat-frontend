@@ -54,7 +54,7 @@
 </style>
 
 <script>
-    import {AUTH_REQUEST} from '@/utils/constants'
+    import {AUTH_REQUEST,AUTH_LOGOUT} from '@/utils/constants'
 
     export default {
         name: 'Login',
@@ -68,6 +68,9 @@
                     password: [],
                 }
             }
+        },
+        created(){
+            this.$store.dispatch(AUTH_LOGOUT)
         },
         methods: {
             onSubmit: function (e) {

@@ -14,7 +14,10 @@ import PDatePicker from 'vue2-persian-datepicker'
 import Vuelidate from 'vuelidate'
 import VuejsDialog from 'vuejs-dialog';
 import 'vuejs-dialog/dist/vuejs-dialog.min.css';
+import wysiwyg from "vue-wysiwyg";
+import "vue-wysiwyg/dist/vueWysiwyg.css";
 
+Vue.use(wysiwyg, {});
 Vue.use(VuejsDialog);
 Vue.use(BootstrapVue);
 Vue.component('pdatepicker', PDatePicker)

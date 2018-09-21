@@ -1,5 +1,9 @@
 <template>
     <div dir="rtl">
+        <b-nav fill tabs>
+            <b-nav-item :to="{name:'Manage.Panel'}" exact>پانل</b-nav-item>
+            <b-nav-item :to="{name:'Manage.Posts'}">اطلاعیه‌ها</b-nav-item>
+        </b-nav>
         <p v-if="isLoading">
             در حال دریافت اطلاعات
         </p>
