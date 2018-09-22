@@ -25,10 +25,8 @@
                 program: {
                     is_open: false,
                     state: 'active',
-                    posts: [],
                     has_coupling: false,
                     questions: [],
-                    registrations: []
                 },
             }
         },
@@ -39,7 +37,7 @@
 
         methods: {
             fetchData() {
-                HTTP.get('manage/program/' + this.$route.params.program_id + '/?format=json')
+                HTTP.get('manage/' + this.$route.params.program_id + '/?format=json')
                     .then((resp) => {
                         this.program = resp.data;
                         this.$emit('fetched')

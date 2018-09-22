@@ -1,17 +1,33 @@
 <template>
     <div dir="rtl">
+        <div>
+            <b-row>
+                <b-col>
+
+                    <div>
+                        <b-button variant="success" :disabled="fetchStatus==='fetching'" @click="fetchData">
+                            <span v-show="fetchStatus!=='fetching'">بارگیری مجدد از سرور</span>
+                            <span v-show="fetchStatus==='fetching'">در حال بارگیری</span>
+                        </b-button>
+                    </div>
+                </b-col>
+                <b-col cols="2">
+                    <h3>
+                        ستون‌های جدول
+                    </h3>
+                    <b-form-checkbox-group stacked  plain v-model="fields" :options="availableFields">
+                    </b-form-checkbox-group>
+                </b-col>
+            </b-row>
+        </div>
         <div class="well">
-            <b-table striped hover :items="$parent.program.registrations" :fields="fields" outlined bordered>
-                <template slot="people_type" slot-scope="data">
+            <b-table striped hover :items="registrations"  :fields="fields" outlined bordered>
+                <template slot="اعمال" slot-scope="data">
                     <span>
-                        {{PEOPLE_TYPE_CHOICES[data.item.profile.people_type]}}
+                        چطوری؟
                     </span>
                 </template>
-                <template slot="status" slot-scope="data">
-                    <span>
-                        {{STATUS_CHOICES[data.item.status]}}
-                    </span>
-                </template>
+
             </b-table>
         </div>
     </div>
@@ -20,7 +36,7 @@
 <script>
     import {HTTP} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
-    import {STATUS_CHOICES,PEOPLE_TYPE_CHOICES} from '@/utils/choices'
+    import {flatRegistrations} from '@/utils/specifics'
 
 
     export default {
@@ -28,23 +44,28 @@
 
         data() {
             return {
-                fields: [
-                    { key: 'id', label: 'ردیف' },
-                    { key: 'profile.name', label: 'نام' },
-                    { key: 'people_type', label: 'وضعیت تحصیل' },
-                    { key: 'status', label: 'وضعیت' },
-                ],
-                STATUS_CHOICES:STATUS_CHOICES,
-                PEOPLE_TYPE_CHOICES:PEOPLE_TYPE_CHOICES
+                registrations: [],
+                availableFields:['ردیف','نام','وضعیت تحصیل','وضعیت','متاهلی','اعمال'],
+                fields:['ردیف','نام','وضعیت تحصیل','وضعیت','اعمال'],
+                fetchStatus:'default'
 
             }
         },
         created() {
             // this.constructNewRegistration();
             // this.$parent.$on('fetched', this.constructNewRegistration);
+            this.fetchData()
         },
         methods: {
-
+            fetchData() {
+                this.fetchStatus='fetching'
+                HTTP.get('manage/' + this.$route.params.program_id+'/registrations/?format=json').then(resp => {
+                    this.registrations =flatRegistrations( resp.data)
+                    this.fetchStatus='fetched'
+                }).catch(error=>{
+                    this.fetchStatus='error'
+                })
+            }
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
@@ -75,4 +96,5 @@
     .question-item {
         font-weight: bold;
     }
+
 </style>
