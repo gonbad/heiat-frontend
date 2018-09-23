@@ -16,6 +16,7 @@ export  function flatRegistration(raw,questions=[]){
     ans['نام پدر']=raw.profile.father_name
     ans['تاریخ تولد میلادی']=raw.profile.birth_date
     ans['تاریخ تولد شمسی']=raw.profile.birth_date?moment(raw.profile.birth_date).format('jYYYY/jM/jD'):null
+    ans['تاریخ ثبت‌نام']=moment(raw.registrationDate).format('jYYYY/jM/jD-HH:mm')
     ans['شماره دانشجویی']=raw.profile.student_number
     ans['تعداد قسط']=raw.numberOfPayments
     ans['وضعیت تحصیل']=PEOPLE_TYPE_CHOICES[raw.profile.people_type]

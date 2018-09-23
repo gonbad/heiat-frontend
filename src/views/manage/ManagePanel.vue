@@ -37,6 +37,17 @@
                                 </b-form-checkbox-group>
                             </span>
                             </div>
+                            <div>
+                                <label>
+                                    جنسیت:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.gender">
+                                    <b-form-checkbox value="مرد">مرد</b-form-checkbox>
+                                    <b-form-checkbox value="زن">زن</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
                             <div v-if="$parent.program.has_coupling">
                                 <label>
                                     متاهلی:
@@ -48,14 +59,46 @@
                                 </b-form-checkbox-group>
                             </span>
                             </div>
-                            <div>
+                             <div v-if="$parent.program.type==='arbaeen'">
                                 <label>
-                                    جنسیت:
+                                    وضعیت گذرنامه:
                                 </label>
                                 <span style="margin-right: -7px; display: inline">
-                                <b-form-checkbox-group plain v-model="filter.gender">
-                                    <b-form-checkbox value="مرد">مرد</b-form-checkbox>
-                                    <b-form-checkbox value="زن">زن</b-form-checkbox>
+                                <b-form-checkbox-group plain v-model="filter.passport">
+                                    <b-form-checkbox value="دارم">دارم</b-form-checkbox>
+                                    <b-form-checkbox value="ندارم">ندارم</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
+                            <div v-if="$parent.program.type==='arbaeen'">
+                                <label>
+                                    وضعیت نظام وظیفه:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.conscription"
+                                                       :options="choices.conscription">
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
+                            <div>
+                                <label>
+                                    مقطع:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.level">
+                                    <b-form-checkbox value="کارشناسی">کارشناسی</b-form-checkbox>
+                                    <b-form-checkbox value="کارشناسی ارشد">کارشناسی ارشد</b-form-checkbox>
+                                    <b-form-checkbox value="دکترا">دکترا</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
+                            <div>
+                                <label>
+                                    سال ورود:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.year"
+                                                       :options="years">
                                 </b-form-checkbox-group>
                             </span>
                             </div>
@@ -133,7 +176,7 @@
     import {HTTP, exportExcel} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-    import {STATUS_VALUES, PEOPLE_TYPE_VALUES} from '@/utils/choices'
+    import {STATUS_VALUES, PEOPLE_TYPE_VALUES,CONSCRIPTION_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',
@@ -141,21 +184,26 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت','تعداد قسط','وضعیت گذرنامه','وضعیت نظام وظیفه','کد ملی','ایمیل','شماره موبایل','نام پدر','شماره گذرنامه','تاریخ صدور گذرنامه','تاریخ انقضای گذرنامه','شماره دانشجویی','مقطع','سال ورود','تاریخ تولد شمسی','تاریخ تولد میلادی', 'اعمال',..._.map(this.$parent.program.questions,'title')],
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت','تعداد قسط','تاریخ ثبت‌نام','وضعیت گذرنامه','وضعیت نظام وظیفه','کد ملی','ایمیل','شماره موبایل','نام پدر','شماره گذرنامه','تاریخ صدور گذرنامه','تاریخ انقضای گذرنامه','شماره دانشجویی','مقطع','سال ورود','تاریخ تولد شمسی','تاریخ تولد میلادی', 'اعمال',..._.map(this.$parent.program.questions,'title')],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 selectedIds: [],
                 allSelected: false,
                 choices: {
                     status: STATUS_VALUES,
-                    people_type: PEOPLE_TYPE_VALUES
+                    people_type: PEOPLE_TYPE_VALUES,
+                    conscription:CONSCRIPTION_VALUES
                 },
                 filter: {
                     status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
                     people_type: [],
-                    gender:[],
+                    gender:['مرد',],
                     coupling:[],
+                    passport:[],
+                    conscription:[],
                     numberOfPayments:[],
+                    level:[],
+                    year:[],
                     ..._.reduce(this.$parent.program.questions,(obj,question)=>{
                        obj[question.title]=[]
                     },{})
@@ -193,10 +241,29 @@
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
+            years(){
+              let year=Number(this.$parent.program.year.toString().slice(-2))
+                return [...Array(year+1).keys()].slice(year-4)
+            },
             filtered() {
                 return _.filter(this.registrations, item => {
                     if (this.filter.status.length > 0) {
                         if (!_.includes(this.filter.status, item['وضعیت'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.level.length > 0) {
+                        if (!_.includes(this.filter.level, item['مقطع'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.year.length > 0) {
+                        if (!_.includes(this.filter.year, item['سال ورود'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.conscription.length > 0) {
+                        if (!_.includes(this.filter.conscription, item['وضعیت نظام وظیفه'])) {
                             return false;
                         }
                     }
@@ -207,6 +274,11 @@
                     }
                     if (this.filter.coupling.length > 0) {
                         if (!_.includes(this.filter.coupling, item['متاهلی'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.passport.length > 0) {
+                        if (!_.includes(this.filter.passport, item['وضعیت گذرنامه'])) {
                             return false;
                         }
                     }
