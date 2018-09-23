@@ -15,20 +15,33 @@
                     <h3>
                         ستون‌های جدول
                     </h3>
-                    <b-form-checkbox-group stacked  plain v-model="fields" :options="availableFields">
+                    <b-form-checkbox-group stacked plain v-model="fields" :options="availableFields">
                     </b-form-checkbox-group>
                 </b-col>
             </b-row>
         </div>
         <div class="well">
-            <b-table striped hover :items="registrations"  :fields="fields" outlined bordered>
+            <b-table striped hover :items="filtered" :fields="fields" outlined bordered>
                 <template slot="اعمال" slot-scope="data">
                     <span>
-                        چطوری؟
+                        <input type="checkbox" :value="data.item['ردیف']" v-model="selectedIds">
+                    </span>
+                </template>
+                <template slot="HEAD_اعمال" slot-scope="data">
+                    <span>
+                        <b-button variant="secondary" @click="toggleSelectAll">
+                            <span v-show="!allSelected">
+                                انتخاب همه
+                            </span>
+                            <span v-show="allSelected">
+                                عدم انتخاب همه
+                            </span>
+                        </b-button>
                     </span>
                 </template>
 
             </b-table>
+
         </div>
     </div>
 
@@ -45,9 +58,11 @@
         data() {
             return {
                 registrations: [],
-                availableFields:['ردیف','نام','وضعیت تحصیل','وضعیت','متاهلی','اعمال'],
-                fields:['ردیف','نام','وضعیت تحصیل','وضعیت','اعمال'],
-                fetchStatus:'default'
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی', 'اعمال'],
+                fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
+                fetchStatus: 'default',
+                selectedIds: [],
+                allSelected: false
 
             }
         },
@@ -58,33 +73,31 @@
         },
         methods: {
             fetchData() {
-                this.fetchStatus='fetching'
-                HTTP.get('manage/' + this.$route.params.program_id+'/registrations/?format=json').then(resp => {
-                    this.registrations =flatRegistrations( resp.data)
-                    this.fetchStatus='fetched'
-                }).catch(error=>{
-                    this.fetchStatus='error'
+                this.fetchStatus = 'fetching'
+                HTTP.get('manage/' + this.$route.params.program_id + '/registrations/?format=json').then(resp => {
+                    this.registrations = flatRegistrations(resp.data)
+                    this.fetchStatus = 'fetched'
+                }).catch(error => {
+                    this.fetchStatus = 'error'
                 })
-            }
+            },
+            toggleSelectAll() {
+                this.selectedIds = [];
+                this.allSelected = !this.allSelected
+                if (this.allSelected) {
+                    for (let r of this.filtered) {
+                        this.selectedIds.push(r['ردیف'])
+                    }
+                }
+            },
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
-            //
-            // answers: function () {
-            //     return _.map(this.$parent.program.users_questions, item => {
-            //         let ans = {
-            //             title: item.title
-            //         };
-            //         let found_answer = _.find(this.$parent.program.registration.answers, {'question': item.id})
-            //         if (found_answer) {
-            //             ans['yes'] = found_answer.yes
-            //         } else {
-            //             ans['yes'] = false
-            //         }
-            //         return ans;
-            //
-            //     })
-            // }
+            filtered() {
+                return _.filter(this.registrations, item => {
+                    return item['ردیف'] % 2 === 0
+                })
+            },
         }
     }
 </script>
