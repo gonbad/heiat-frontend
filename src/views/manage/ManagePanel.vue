@@ -26,6 +26,30 @@
                             </div>
                             <div>
                                 <label>
+                                    تعداد قسط پرداخت شده:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.numberOfPayments">
+                                    <b-form-checkbox :value="0">بدون پرداخت</b-form-checkbox>
+                                    <b-form-checkbox :value="1">قسط اول</b-form-checkbox>
+                                    <b-form-checkbox :value="2">دو قسط</b-form-checkbox>
+                                    <b-form-checkbox :value="3">سه قسط</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
+                            <div v-if="$parent.program.has_coupling">
+                                <label>
+                                    متاهلی:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.coupling">
+                                    <b-form-checkbox value="بله">بله</b-form-checkbox>
+                                    <b-form-checkbox value="خیر">خیر</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
+                            <div>
+                                <label>
                                     جنسیت:
                                 </label>
                                 <span style="margin-right: -7px; display: inline">
@@ -117,7 +141,7 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت', 'اعمال',..._.map(this.$parent.program.questions,'title')],
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت','تعداد قسط', 'اعمال',..._.map(this.$parent.program.questions,'title')],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 selectedIds: [],
@@ -130,6 +154,8 @@
                     status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
                     people_type: [],
                     gender:[],
+                    coupling:[],
+                    numberOfPayments:[],
                     ..._.reduce(this.$parent.program.questions,(obj,question)=>{
                        obj[question.title]=[]
                     },{})
@@ -173,7 +199,18 @@
                         if (!_.includes(this.filter.status, item['وضعیت'])) {
                             return false;
                         }
-                    }if (this.filter.gender.length > 0) {
+                    }
+                    if (this.filter.numberOfPayments.length > 0) {
+                        if (!_.includes(this.filter.numberOfPayments, item['تعداد قسط'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.coupling.length > 0) {
+                        if (!_.includes(this.filter.coupling, item['متاهلی'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.gender.length > 0) {
                         if (!_.includes(this.filter.gender, item['جنسیت'])) {
                             return false;
                         }
@@ -184,7 +221,7 @@
                         }
                     }
                     for(let question of this.$parent.program.questions){
-                        if (this.filter[question.title].length > 0) {
+                        if (this.filter[question.title] && this.filter[question.title].length > 0) {
                             if (!_.includes(this.filter[question.title], item[question.title])) {
                                 return false;
                             }
