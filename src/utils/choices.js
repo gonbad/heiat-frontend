@@ -1,3 +1,4 @@
+import _ from 'lodash'
 export const CONSCRIPTION_CHOICES = {
     "army": "نظامی",
     "respite": "مهلت قانونی معرفی",
@@ -32,3 +33,5 @@ export const STATUS_CHOICES = {
     "given up": "انصراف",
     "first stage": "مرحله اول"
 }
+
+export const STATUS_VALUES=_.values(STATUS_CHOICES)

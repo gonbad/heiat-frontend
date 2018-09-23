@@ -3,11 +3,27 @@
         <div>
             <b-row>
                 <b-col>
+                    <div>
+                        <div>
+                            <label>
+                                وضعیت:
+                            </label>
+                            <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.status" :options="choices.status">
+                                </b-form-checkbox-group>
+                            </span>
+                        </div>
 
+                    </div>
                     <div>
                         <b-button variant="success" :disabled="fetchStatus==='fetching'" @click="fetchData">
                             <span v-show="fetchStatus!=='fetching'">بارگیری مجدد از سرور</span>
                             <span v-show="fetchStatus==='fetching'">در حال بارگیری</span>
+                        </b-button>
+                        <b-button variant="default"  @click="excel">
+                            خروجی اکسل از
+                            {{filtered.length | pNumber}}
+                            مورد در حال نمایش
                         </b-button>
                     </div>
                 </b-col>
@@ -47,10 +63,10 @@
 
 </template>
 <script>
-    import {HTTP} from '@/utils/index';
+    import {HTTP,exportExcel} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-
+    import {STATUS_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',
@@ -62,7 +78,13 @@
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 selectedIds: [],
-                allSelected: false
+                allSelected: false,
+                choices: {
+                    status: STATUS_VALUES
+                },
+                filter: {
+                    status: [ "قطعی", "منتظر قرعه کشی", "شرکت کرده" ]
+                }
 
             }
         },
@@ -90,12 +112,20 @@
                     }
                 }
             },
+            excel(){
+                exportExcel(this.filtered)
+            }
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
             filtered() {
                 return _.filter(this.registrations, item => {
-                    return item['ردیف'] % 2 === 0
+                   if(this.filter.status.length>0){
+                       if(!_.includes(this.filter.status,item['وضعیت'])){
+                           return false;
+                       }
+                   }
+                   return true
                 })
             },
         }
@@ -109,5 +139,15 @@
     .question-item {
         font-weight: bold;
     }
-
+.form-check-label{
+    margin-left: 3px;
+    padding-right: 5px !important;
+}
+    .form-check.form-check-inline{
+        margin-left: 0;
+        margin-right: 7px;
+    }
+    .form-check-inline .form-check-input{
+        margin-right: 0;
+    }
 </style>
