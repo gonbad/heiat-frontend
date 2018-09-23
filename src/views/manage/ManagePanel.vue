@@ -35,6 +35,17 @@
                                 </b-form-checkbox-group>
                             </span>
                             </div>
+<div v-for="question in $parent.program.questions">
+                                <label>
+                                    {{question.title}}:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter[question.title]">
+                                    <b-form-checkbox value="بله">بله</b-form-checkbox>
+                                    <b-form-checkbox value="خیر">خیر</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                            </div>
 
                         </b-collapse>
 
@@ -44,7 +55,7 @@
                             <span v-show="fetchStatus!=='fetching'">بارگیری مجدد از سرور</span>
                             <span v-show="fetchStatus==='fetching'">در حال بارگیری</span>
                         </b-button>
-                        <b-button variant="default" @click="excel">
+                        <b-button variant="secondary" @click="excel">
                             خروجی اکسل از
                             {{filtered.length | pNumber}}
                             مورد در حال نمایش
@@ -106,7 +117,7 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت', 'اعمال'],
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت', 'اعمال',..._.map(this.$parent.program.questions,'title')],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 selectedIds: [],
@@ -118,7 +129,10 @@
                 filter: {
                     status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
                     people_type: [],
-                    gender:[]
+                    gender:[],
+                    ..._.reduce(this.$parent.program.questions,(obj,question)=>{
+                       obj[question.title]=[]
+                    },{})
                 }
 
             }
@@ -132,7 +146,7 @@
             fetchData() {
                 this.fetchStatus = 'fetching'
                 HTTP.get('manage/' + this.$route.params.program_id + '/registrations/?format=json').then(resp => {
-                    this.registrations = flatRegistrations(resp.data)
+                    this.registrations = flatRegistrations(resp.data,this.$parent.program.questions)
                     this.fetchStatus = 'fetched'
                 }).catch(error => {
                     this.fetchStatus = 'error'
@@ -168,9 +182,12 @@
                         if (!_.includes(this.filter.people_type, item['وضعیت تحصیل'])) {
                             return false;
                         }
-                    }if (this.filter.people_type.length > 0) {
-                        if (!_.includes(this.filter.people_type, item['وضعیت تحصیل'])) {
-                            return false;
+                    }
+                    for(let question of this.$parent.program.questions){
+                        if (this.filter[question.title].length > 0) {
+                            if (!_.includes(this.filter[question.title], item[question.title])) {
+                                return false;
+                            }
                         }
                     }
                     return true

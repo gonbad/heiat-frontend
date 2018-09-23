@@ -9,28 +9,28 @@ export const CONSCRIPTION_CHOICES = {
     "other": "سایر"
 }
 export const PEOPLE_TYPE_CHOICES = {
-    "sharif employed": "کارمند شریف",
-    "other": "سایر",
-    "sharif graduated talabe": "فاغ التحصیل شریف و طلبه فعلی",
-    "sharif graduated student not sharif": "فارغ التحصیل شریف و دانشجو سایر",
-    "talabe": "طلبه",
     "sharif student": "دانشجو شریف",
     "sharif graduated": "فارغ التحصیل شریف",
-    "not sharif graduated": "فارغ التحصیل سایر",
+    "sharif graduated student not sharif": "فارغ التحصیل شریف و دانشجو سایر",
+    "sharif graduated talabe": "فاغ التحصیل شریف و طلبه فعلی",
     "sharif master": "استاد شریف",
-    "not sharif student": "دانشجو سایر"
+    "sharif employed": "کارمند شریف",
+    "talabe": "طلبه",
+    "not sharif student": "دانشجو سایر",
+    "not sharif graduated": "فارغ التحصیل سایر",
+    "other": "سایر",
 }
 export const STATUS_CHOICES = {
-    "certain": "قطعی",
-    "removed": "پاک شده",
     "default": "منتظر قرعه کشی",
-    "temporary": "موقت",
+    "certain": "قطعی",
+    "reserved": "رزرو",
+    "given up": "انصراف",
+    "suspended": "معلق",
     "not chosen": "انتخاب نشده",
     "came": "شرکت کرده",
-    "reserved": "رزرو",
-    "suspended": "معلق",
     "not came": "شرکت نکرده",
-    "given up": "انصراف",
+    "temporary": "موقت",
+    "removed": "پاک شده",
     "first stage": "مرحله اول"
 }
 
