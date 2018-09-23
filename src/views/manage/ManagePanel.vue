@@ -13,6 +13,27 @@
                                 </b-form-checkbox-group>
                             </span>
                         </div>
+                        <div>
+                            <label>
+                                وضعیت تحصیل:
+                            </label>
+                            <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.people_type"
+                                                       :options="choices.people_type">
+                                </b-form-checkbox-group>
+                            </span>
+                        </div>
+                        <div>
+                            <label>
+                                جنسیت:
+                            </label>
+                            <span style="margin-right: -7px; display: inline">
+                                <b-form-checkbox-group plain v-model="filter.gender">
+                                    <b-form-checkbox value="مرد">مرد</b-form-checkbox>
+                                    <b-form-checkbox value="زن">زن</b-form-checkbox>
+                                </b-form-checkbox-group>
+                            </span>
+                        </div>
 
                     </div>
                     <div>
@@ -20,7 +41,7 @@
                             <span v-show="fetchStatus!=='fetching'">بارگیری مجدد از سرور</span>
                             <span v-show="fetchStatus==='fetching'">در حال بارگیری</span>
                         </b-button>
-                        <b-button variant="default"  @click="excel">
+                        <b-button variant="default" @click="excel">
                             خروجی اکسل از
                             {{filtered.length | pNumber}}
                             مورد در حال نمایش
@@ -36,6 +57,7 @@
                 </b-col>
             </b-row>
         </div>
+        <hr>
         <div class="well">
             <b-table striped hover :items="filtered" :fields="fields" outlined bordered>
                 <template slot="اعمال" slot-scope="data">
@@ -63,10 +85,10 @@
 
 </template>
 <script>
-    import {HTTP,exportExcel} from '@/utils/index';
+    import {HTTP, exportExcel} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-    import {STATUS_VALUES} from '@/utils/choices'
+    import {STATUS_VALUES, PEOPLE_TYPE_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',
@@ -74,16 +96,19 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی', 'اعمال'],
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت', 'اعمال'],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 selectedIds: [],
                 allSelected: false,
                 choices: {
-                    status: STATUS_VALUES
+                    status: STATUS_VALUES,
+                    people_type: PEOPLE_TYPE_VALUES
                 },
                 filter: {
-                    status: [ "قطعی", "منتظر قرعه کشی", "شرکت کرده" ]
+                    status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
+                    people_type: [],
+                    gender:[]
                 }
 
             }
@@ -112,7 +137,7 @@
                     }
                 }
             },
-            excel(){
+            excel() {
                 exportExcel(this.filtered)
             }
         },
@@ -120,12 +145,25 @@
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
             filtered() {
                 return _.filter(this.registrations, item => {
-                   if(this.filter.status.length>0){
-                       if(!_.includes(this.filter.status,item['وضعیت'])){
-                           return false;
-                       }
-                   }
-                   return true
+                    if (this.filter.status.length > 0) {
+                        if (!_.includes(this.filter.status, item['وضعیت'])) {
+                            return false;
+                        }
+                    }if (this.filter.gender.length > 0) {
+                        if (!_.includes(this.filter.gender, item['جنسیت'])) {
+                            return false;
+                        }
+                    }
+                    if (this.filter.people_type.length > 0) {
+                        if (!_.includes(this.filter.people_type, item['وضعیت تحصیل'])) {
+                            return false;
+                        }
+                    }if (this.filter.people_type.length > 0) {
+                        if (!_.includes(this.filter.people_type, item['وضعیت تحصیل'])) {
+                            return false;
+                        }
+                    }
+                    return true
                 })
             },
         }
@@ -139,15 +177,18 @@
     .question-item {
         font-weight: bold;
     }
-.form-check-label{
-    margin-left: 3px;
-    padding-right: 5px !important;
-}
-    .form-check.form-check-inline{
+
+    .form-check-label {
+        margin-left: 3px;
+        padding-right: 5px !important;
+    }
+
+    .form-check.form-check-inline {
         margin-left: 0;
         margin-right: 7px;
     }
-    .form-check-inline .form-check-input{
+
+    .form-check-inline .form-check-input {
         margin-right: 0;
     }
 </style>

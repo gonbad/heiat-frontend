@@ -35,3 +35,5 @@ export const STATUS_CHOICES = {
 }
 
 export const STATUS_VALUES=_.values(STATUS_CHOICES)
+export const PEOPLE_TYPE_VALUES=_.values(PEOPLE_TYPE_CHOICES)
+export const CONSCRIPTION_VALIES=_.values(CONSCRIPTION_CHOICES)
