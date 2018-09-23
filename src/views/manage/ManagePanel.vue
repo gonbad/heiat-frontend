@@ -13,27 +13,30 @@
                                 </b-form-checkbox-group>
                             </span>
                         </div>
-                        <div>
-                            <label>
-                                وضعیت تحصیل:
-                            </label>
-                            <span style="margin-right: -7px; display: inline">
+                        <b-collapse id="more_filter">
+                            <div>
+                                <label>
+                                    وضعیت تحصیل:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
                                 <b-form-checkbox-group plain v-model="filter.people_type"
                                                        :options="choices.people_type">
                                 </b-form-checkbox-group>
                             </span>
-                        </div>
-                        <div>
-                            <label>
-                                جنسیت:
-                            </label>
-                            <span style="margin-right: -7px; display: inline">
+                            </div>
+                            <div>
+                                <label>
+                                    جنسیت:
+                                </label>
+                                <span style="margin-right: -7px; display: inline">
                                 <b-form-checkbox-group plain v-model="filter.gender">
                                     <b-form-checkbox value="مرد">مرد</b-form-checkbox>
                                     <b-form-checkbox value="زن">زن</b-form-checkbox>
                                 </b-form-checkbox-group>
                             </span>
-                        </div>
+                            </div>
+
+                        </b-collapse>
 
                     </div>
                     <div>
@@ -46,14 +49,21 @@
                             {{filtered.length | pNumber}}
                             مورد در حال نمایش
                         </b-button>
+
+                        <b-button variant="info" v-b-toggle.more_filter>
+                           فیلتر بیشتر
+                        </b-button>
                     </div>
                 </b-col>
                 <b-col cols="2">
-                    <h3>
+                    <b-button variant="info" v-b-toggle.show_columns>
                         ستون‌های جدول
-                    </h3>
-                    <b-form-checkbox-group stacked plain v-model="fields" :options="availableFields">
-                    </b-form-checkbox-group>
+                    </b-button>
+                    <b-collapse id="show_columns">
+                        <b-form-checkbox-group stacked plain v-model="fields" :options="availableFields">
+                        </b-form-checkbox-group>
+                    </b-collapse>
+
                 </b-col>
             </b-row>
         </div>
