@@ -1,11 +1,11 @@
 <template>
     <div dir="rtl">
 <print-registration :registration="$parent.registration" :questions="$parent.$parent.program.questions"></print-registration>
-        <div v-if="$parent.registration.couple">
-            <h2>
+        <div v-if="$parent.registration.couple_id">
+            <h2><router-link :to="{name:'Manage.Registration.Main',params:{program_id:$parent.$parent.program.id,registration_id:$parent.registration.couple_id}}">
                 ثبت‌نام همسر
+            </router-link>
             </h2>
-            <print-registration :registration="$parent.registration.couple" :questions="$parent.$parent.program.questions"></print-registration>
         </div>
     </div>
 

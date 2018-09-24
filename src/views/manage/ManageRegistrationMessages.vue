@@ -1,6 +1,6 @@
 <template>
     <div dir="rtl" class="container">
-<messages :messages="$parent.registration.messages"></messages>
+<messages :messages="messages"></messages>
         <div >
                                 <textarea v-model="newMessageText" style="width: 100%">
 
@@ -32,12 +32,14 @@
         components: {Messages},
         data() {
             return {
+                messages:[],
                 newMessageText:'',
                 send_sms:false,
                 status:'default'
             }
         },
         created() {
+            this.fetchData()
         },
         methods: {
             send(){
@@ -48,6 +50,11 @@
                     this.newMessageText=''
                 }).catch(error => {
                     this.status = 'error'
+                })
+            },
+            fetchData(){
+                HTTP.get('manage_registration/'+this.$route.params.registration_id+'/messages').then(resp => {
+                    this.messages=resp.data
                 })
             }
         },

@@ -180,6 +180,11 @@ export default new Router({
                             name: 'Manage.Registration.Messages',
                             component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageRegistrationMessages'),
                         },
+                        {
+                            path: 'payments',
+                            name: 'Manage.Registration.Payments',
+                            component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageRegistrationPayments'),
+                        },
                     ]
                 }
             ]

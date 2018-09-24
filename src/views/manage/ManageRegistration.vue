@@ -4,6 +4,9 @@
             <b-nav-item :to="{name:'Manage.Registration.Main'}" exact>
                 {{registration.profile.user.name}}
             </b-nav-item>
+            <b-nav-item :to="{name:'Manage.Registration.Payments'}">
+               گزارش مالی
+            </b-nav-item>
             <b-nav-item :to="{name:'Manage.Registration.Messages'}">
                پیام‌ها
             </b-nav-item>
@@ -27,8 +30,6 @@
             return {
                 isLoading: true,
                 registration:{
-                    messages:[],
-                    payments:[],
                     profile:{
                         user:{
 
