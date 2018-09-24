@@ -2,7 +2,7 @@ import {STATUS_CHOICES, PEOPLE_TYPE_CHOICES,CONSCRIPTION_CHOICES} from '@/utils/
 import _ from 'lodash'
 import moment from 'moment-jalaali'
 export  function flatRegistration(raw,questions=[]){
-    let ans=[]
+    let ans={}
     ans['ردیف']=raw.id
     ans['نام']=raw.profile.user.name
     ans['کد ملی']=raw.profile.user.username
