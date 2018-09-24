@@ -196,7 +196,7 @@
                 },
                 filter: {
                     status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
-                    people_type: [],
+                    people_type: [...(this.$parent.program.type==='mashhad'?['دانشجو شریف']:[])],
                     gender:['مرد',],
                     coupling:[],
                     passport:[],
