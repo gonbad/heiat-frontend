@@ -59,7 +59,7 @@
                                 </b-form-checkbox-group>
                             </span>
                             </div>
-                             <div v-if="$parent.program.type==='arbaeen'">
+                            <div v-if="$parent.program.type==='arbaeen'">
                                 <label>
                                     وضعیت گذرنامه:
                                 </label>
@@ -102,7 +102,7 @@
                                 </b-form-checkbox-group>
                             </span>
                             </div>
-<div v-for="question in $parent.program.questions">
+                            <div v-for="question in $parent.program.questions">
                                 <label>
                                     {{question.title}}:
                                 </label>
@@ -129,7 +129,7 @@
                         </b-button>
 
                         <b-button variant="info" v-b-toggle.more_filter>
-                           فیلتر بیشتر
+                            فیلتر بیشتر
                         </b-button>
                     </div>
                 </b-col>
@@ -150,21 +150,22 @@
             <b-table striped hover :items="filtered" :fields="fields" outlined bordered>
                 <template slot="اعمال" slot-scope="data">
                     <span>
-                        <input type="checkbox" :value="data.item['ردیف']" v-model="selectedIds">
+                        <span class="icons">
+                        <router-link
+                                :to="{name:'Manage.Registration.Main',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                            <i class="fa fa-info-circle"></i>
+                        </router-link>
+                        <router-link :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                            <i class="fa fa-envelope"></i>
+                        </router-link>
+                        <router-link :to="{name:'Manage.Registration.Payments',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                            <i class="fa fa-money"></i>
+                        </router-link>
+                        </span>
+
                     </span>
                 </template>
-                <template slot="HEAD_اعمال" slot-scope="data">
-                    <span>
-                        <b-button variant="secondary" @click="toggleSelectAll">
-                            <span v-show="!allSelected">
-                                انتخاب همه
-                            </span>
-                            <span v-show="allSelected">
-                                عدم انتخاب همه
-                            </span>
-                        </b-button>
-                    </span>
-                </template>
+
 
             </b-table>
 
@@ -176,7 +177,7 @@
     import {HTTP, exportExcel} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-    import {STATUS_VALUES, PEOPLE_TYPE_VALUES,CONSCRIPTION_VALUES} from '@/utils/choices'
+    import {STATUS_VALUES, PEOPLE_TYPE_VALUES, CONSCRIPTION_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',
@@ -184,29 +185,27 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی','جنسیت','تعداد قسط','تاریخ ثبت‌نام','وضعیت گذرنامه','وضعیت نظام وظیفه','کد ملی','ایمیل','شماره موبایل','نام پدر','شماره گذرنامه','تاریخ صدور گذرنامه','تاریخ انقضای گذرنامه','شماره دانشجویی','مقطع','سال ورود','تاریخ تولد شمسی','تاریخ تولد میلادی', 'اعمال',..._.map(this.$parent.program.questions,'title')],
+                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی', 'جنسیت', 'تعداد قسط', 'تاریخ ثبت‌نام', 'وضعیت گذرنامه', 'وضعیت نظام وظیفه', 'کد ملی', 'ایمیل', 'شماره موبایل', 'نام پدر', 'شماره گذرنامه', 'تاریخ صدور گذرنامه', 'تاریخ انقضای گذرنامه', 'شماره دانشجویی', 'مقطع', 'سال ورود', 'تاریخ تولد شمسی', 'تاریخ تولد میلادی', 'اعمال', ..._.map(this.$parent.program.questions, 'title')],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
-                selectedIds: [],
-                allSelected: false,
                 choices: {
                     status: STATUS_VALUES,
                     people_type: PEOPLE_TYPE_VALUES,
-                    conscription:CONSCRIPTION_VALUES
+                    conscription: CONSCRIPTION_VALUES
                 },
                 filter: {
                     status: ["قطعی", "منتظر قرعه کشی", "شرکت کرده"],
-                    people_type: [...(this.$parent.program.type==='mashhad'?['دانشجو شریف']:[])],
-                    gender:['مرد',],
-                    coupling:[],
-                    passport:[],
-                    conscription:[],
-                    numberOfPayments:[],
-                    level:[],
-                    year:[],
-                    ..._.reduce(this.$parent.program.questions,(obj,question)=>{
-                       obj[question.title]=[]
-                    },{})
+                    people_type: [...(this.$parent.program.type === 'mashhad' ? ['دانشجو شریف'] : [])],
+                    gender: ['مرد',],
+                    coupling: [],
+                    passport: [],
+                    conscription: [],
+                    numberOfPayments: [],
+                    level: [],
+                    year: [],
+                    ..._.reduce(this.$parent.program.questions, (obj, question) => {
+                        obj[question.title] = []
+                    }, {})
                 }
 
             }
@@ -220,20 +219,11 @@
             fetchData() {
                 this.fetchStatus = 'fetching'
                 HTTP.get('manage/' + this.$route.params.program_id + '/registrations/?format=json').then(resp => {
-                    this.registrations = flatRegistrations(resp.data,this.$parent.program.questions)
+                    this.registrations = flatRegistrations(resp.data, this.$parent.program.questions)
                     this.fetchStatus = 'fetched'
                 }).catch(error => {
                     this.fetchStatus = 'error'
                 })
-            },
-            toggleSelectAll() {
-                this.selectedIds = [];
-                this.allSelected = !this.allSelected
-                if (this.allSelected) {
-                    for (let r of this.filtered) {
-                        this.selectedIds.push(r['ردیف'])
-                    }
-                }
             },
             excel() {
                 exportExcel(this.filtered)
@@ -241,9 +231,9 @@
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
-            years(){
-              let year=Number(this.$parent.program.year.toString().slice(-2))
-                return [...Array(year+1).keys()].slice(year-4)
+            years() {
+                let year = Number(this.$parent.program.year.toString().slice(-2))
+                return [...Array(year + 1).keys()].slice(year - 4)
             },
             filtered() {
                 return _.filter(this.registrations, item => {
@@ -292,7 +282,7 @@
                             return false;
                         }
                     }
-                    for(let question of this.$parent.program.questions){
+                    for (let question of this.$parent.program.questions) {
                         if (this.filter[question.title] && this.filter[question.title].length > 0) {
                             if (!_.includes(this.filter[question.title], item[question.title])) {
                                 return false;
@@ -326,5 +316,8 @@
 
     .form-check-inline .form-check-input {
         margin-right: 0;
+    }
+    .icons a{
+        margin-right: 5px;
     }
 </style>
