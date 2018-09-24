@@ -5,7 +5,7 @@
                 <div class="well">
                     <b-table striped hover :items="ordered" :fields="fields" outlined bordered>
                         <template slot="sender" slot-scope="data">
-                            <router-link :to="'/program/'+data.item.id">{{data.item.name}}</router-link>
+                            <router-link :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item.id}}">{{data.item.name}}</router-link>
                         </template>
                         <template slot="date" slot-scope="data">
                             <span>

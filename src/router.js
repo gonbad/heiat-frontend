@@ -166,7 +166,24 @@ export default new Router({
                     name: 'Manage.Inbox',
                     component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageInbox'),
                 },
+                {
+                    path: 'registration/:registration_id',
+                    component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageRegistration'),
+                    children: [
+                        {
+                            path: '',
+                            name: 'Manage.Registration.Main',
+                            component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageRegistrationMain'),
+                        },
+                        {
+                            path: 'messages',
+                            name: 'Manage.Registration.Messages',
+                            component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageRegistrationMessages'),
+                        },
+                    ]
+                }
             ]
+
         }
     ]
 })
