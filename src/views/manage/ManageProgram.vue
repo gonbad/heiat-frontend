@@ -4,7 +4,76 @@
             <b-container>
                 <b-row>
                     <b-col>
+                        <b-form-group label="عنوان برنامه:">
+                            <b-form-input v-model="$parent.program.title"
+                                          required
+                                          placeholder="عنوان برنامه را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <b-form-group label="زمان برنامه:">
+                            <b-form-input v-model="$parent.program.program_interval"
+                                          required
+                                          placeholder="زمان برنامه را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                         <b-form-group label="زمان ثبت‌نام:">
+                            <b-form-input v-model="$parent.program.register_interval"
+                                          required
+                                          placeholder="زمان ثبت‌نام را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <b-form-group label="نوع برنامه:">
+                            <b-form-select v-model="$parent.program.type" :options="PROGRAM_TYPE_CHOICES"/>
+                        </b-form-group>
+                        <b-form-group label="سال:">
+                            <b-form-input v-model="$parent.program.year"
+                                          required
+                                          type="number"
+                                          placeholder="سال تحصیلی برنامه را به صورت دو رقمی وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <b-form-group label="قیمت پایه(به تومان):">
+                            <b-form-input v-model="$parent.program.base_price"
+                                          required
+                                          type="number"
+                                          placeholder="قیمت پایه را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <b-form-group label="آستانه قسط اول(به تومان):">
+                            <b-form-input v-model="$parent.program.max_first_installment"
+                                          required
+                                          type="number"
+                                          placeholder="حداکثر مبلغ قسط اول را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <b-form-group label="آستانه قسط دوم(به تومان):">
+                            <b-form-input v-model="$parent.program.max_second_installment"
+                                          required
+                                          type="number"
+                                          placeholder="حداکثر مبلغ قسط دوم را وارد کنید">
+                            </b-form-input>
+                        </b-form-group>
+                        <div>
+                            <label>
+                                متاهلی دارد:
+                            </label>
+                            <input type="checkbox" v-model="$parent.program.has_coupling"/>
+                        </div>
+                        <div>
+                            <label>
+                                ثبت‌نام باز است:
+                            </label>
+                            <input type="checkbox" v-model="$parent.program.is_open"/>
+                        </div>
+                        <b-form-group label="وضعیت برنامه:">
+                            <b-form-select v-model="$parent.program.state" :options="PROGRAM_STATE_CHOICES"/>
+                        </b-form-group>
 
+                        <b-button @click="save()" variant="primary" :disabled="status==='sending'">
+                            <span v-show="status==='default'">ویرایش</span>
+                            <span v-show="status==='sending'">در حال ارسال</span>
+                            <span v-show="status==='saved'">ذخیره شد</span>
+                        </b-button>
                     </b-col>
                     <b-col>
                         <table v-if="loaded">
@@ -36,7 +105,7 @@
     import {HTTP} from '@/utils/index';
     import Shift from "../../components/Shift";
     import _ from 'lodash'
-    import {PEOPLE_TYPE_KEYS} from '@/utils/choices'
+    import {PEOPLE_TYPE_KEYS,PROGRAM_TYPE_CHOICES,PROGRAM_STATE_CHOICES} from '@/utils/choices'
 
     export default {
         components: {Shift},
@@ -47,7 +116,10 @@
                 status: 'default',
                 shifts: [],
                 keys: PEOPLE_TYPE_KEYS,
-                loaded:false
+                loaded:false,
+                PROGRAM_TYPE_CHOICES:PROGRAM_TYPE_CHOICES,
+                PROGRAM_STATE_CHOICES:PROGRAM_STATE_CHOICES
+
             }
         },
         created() {
@@ -63,11 +135,10 @@
             },
             save() {
                 this.status = 'sending'
-                // HTTP.shift('manage/shifts/',{'program':this.$parent.program.id,'text':this.newShift}).then(resp=>{
-                //     this.status='saved'
-                //     this.newShift=''
-                //     this.shifts.unshift(resp.data)
-                // })
+                HTTP.patch('manage/'+this.$parent.program.id+'/',this.$parent.program).then(resp=>{
+                    this.$parent.program=resp.data
+                    this.status='saved'
+                })
             },
         },
         computed: {}

@@ -1,4 +1,5 @@
 import _ from 'lodash'
+
 export const CONSCRIPTION_CHOICES = {
     "army": "نظامی",
     "respite": "مهلت قانونی معرفی",
@@ -33,8 +34,21 @@ export const STATUS_CHOICES = {
     "removed": "پاک شده",
     "first stage": "مرحله اول"
 }
-
-export const STATUS_VALUES=_.values(STATUS_CHOICES)
-export const PEOPLE_TYPE_VALUES=_.values(PEOPLE_TYPE_CHOICES)
-export const CONSCRIPTION_VALUES=_.values(CONSCRIPTION_CHOICES)
-export const PEOPLE_TYPE_KEYS=_.keys(PEOPLE_TYPE_CHOICES)
+export const PROGRAM_TYPE_CHOICES = {
+    "arbaeen": "اربعین",
+    "mashhad": "پابوس عشق",
+    "etekaf": "اعتکاف",
+    "south": "اردو جنوب",
+    "voroodi": "اردو ورودی ها",
+    "marasem": "مراسم",
+    "guest": "سایر",
+}
+export const PROGRAM_STATE_CHOICES = {
+    "config": "در حال پیکربندی",
+    "active": "فعال",
+    "archive": "بایگانی"
+}
+export const STATUS_VALUES = _.values(STATUS_CHOICES)
+export const PEOPLE_TYPE_VALUES = _.values(PEOPLE_TYPE_CHOICES)
+export const CONSCRIPTION_VALUES = _.values(CONSCRIPTION_CHOICES)
+export const PEOPLE_TYPE_KEYS = _.keys(PEOPLE_TYPE_CHOICES)
