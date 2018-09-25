@@ -191,7 +191,16 @@
                             <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
                         </b-button>
                     </div>
-
+                    <div>
+                        <label>
+                            تعداد برای قرعه‌کشی:
+                        </label>
+                        <input type="number" v-model="chances"/>
+                        <b-button @click="draw" variant="primary" :disabled="status==='sending' || chances<=0">
+                            <span v-show="status!=='sending'">قرعه‌کشی</span>
+                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                        </b-button>
+                    </div>
                 </b-col>
             <b-col>
 
@@ -238,7 +247,8 @@
                 new_status:'default',
                 status:'default',
                 question_id:null,
-                yes:null
+                yes:null,
+                chances:0
 
             }
         },
@@ -264,6 +274,18 @@
                 this.status = 'sending';
                 HTTP.post('manage/' + this.$route.params.program_id + '/change_status/', {
                     status: this.new_status,
+                    ids: _.map(this.filtered, 'ردیف')
+                }).then(resp => {
+                    this.registrations = resp.data;
+                    this.status = 'default'
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
+            draw() {
+                this.status = 'sending';
+                HTTP.post('manage/' + this.$route.params.program_id + '/draw/', {
+                    chances: this.chances,
                     ids: _.map(this.filtered, 'ردیف')
                 }).then(resp => {
                     this.registrations = resp.data;
