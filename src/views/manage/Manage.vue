@@ -1,9 +1,12 @@
 <template>
     <div dir="rtl">
         <b-nav fill tabs>
+            <b-nav-item :to="{name:'Manage.Program'}">
+                کلیات برنامه
+                {{program.title}}
+            </b-nav-item>
             <b-nav-item :to="{name:'Manage.Panel'}" exact>
                 پانل
-                {{program.title}}
             </b-nav-item>
             <b-nav-item :to="{name:'Manage.Posts'}">اطلاعیه‌ها</b-nav-item>
             <b-nav-item :to="{name:'Manage.Questions'}">سوالات و برچسب‌ها</b-nav-item>

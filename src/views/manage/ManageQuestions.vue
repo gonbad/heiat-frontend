@@ -15,6 +15,12 @@
                                           placeholder="توضیحات سوال/برچسب را وارد کنید">
                             </b-form-input>
                         </b-form-group>
+                        <b-form-group label="میزان تاثیر روی قیمت به تومان:">
+                            <b-form-input v-model="newQuestion.shift"
+                                          type="number"
+                                          placeholder="میزان تاثیر به تومان">
+                            </b-form-input>
+                        </b-form-group>
                         <b-form-group label="کاربر می‌بیند؟">
                             <b-form-radio-group v-model="newQuestion.user_sees" plain stacked>
                                 <b-form-radio :value="true">می‌بیند</b-form-radio>
@@ -57,7 +63,8 @@
                     program:this.$parent.program.id,
                     title:'',
                     desc:'',
-                    user_sees:false
+                    user_sees:false,
+                    shift:0
                 },
                 status: 'default',
             }
@@ -71,7 +78,8 @@
                         program:this.$parent.program.id,
                         title:'',
                         desc:'',
-                        user_sees:false
+                        user_sees:false,
+                        shift:0
                     }
                     this.$parent.program.questions.push(resp.data)
                 })

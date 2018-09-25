@@ -162,6 +162,11 @@ export default new Router({
                     component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManagePosts'),
                 },
                 {
+                    path: 'program',
+                    name: 'Manage.Program',
+                    component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageProgram'),
+                },
+                {
                     path: 'questions',
                     name: 'Manage.Questions',
                     component: () => import(/* webpackChunkName: "manage" */ './views/manage/ManageQuestions'),
