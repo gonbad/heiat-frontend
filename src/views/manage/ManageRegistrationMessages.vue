@@ -45,7 +45,7 @@
             send(){
                 this.status='sending';
                 HTTP.post('manage_registration/'+this.$route.params.registration_id+'/new_message/', {text:this.newMessageText,to_user:true,send_sms:this.send_sms}).then(resp => {
-                    this.$parent.registration.messages.push(resp.data);
+                    this.messages.push(resp.data);
                     this.status='default'
                     this.newMessageText=''
                 }).catch(error => {
