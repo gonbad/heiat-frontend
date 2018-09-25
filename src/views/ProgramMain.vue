@@ -161,7 +161,6 @@
             pay() {
                 this.status = 'sending'
                 HTTP.post('pay/registration/start/', {'registration_id': this.$parent.program.registration.id}).then(resp => {
-                    console.log(resp.data);
                     this.refId = resp.data
                     this.$refs.refref.value = resp.data
                     this.$refs.hiddenForm.submit();
@@ -188,10 +187,8 @@
                         })
                     }
                 }
-                console.log(this.newRegistration)
             },
             register(){
-              console.log(this.newRegistration)
                 this.status = 'sending'
                 HTTP.post('program/register/'+this.$parent.program.id+'/', this.newRegistration).then(resp => {
                     this.$parent.program.registration=resp.data;

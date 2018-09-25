@@ -28,17 +28,13 @@
         },
         computed:{
             flat(){
-                console.log(JSON.stringify(this.questions))
                 let obj=flatRegistration(this.registration,this.questions)
-                console.log(JSON.stringify(obj))
                 let arr=_.map(obj,(value,key)=>{
-                    console.log(key+'-'+value)
                     return{
                         key:key,
                         value:value
                     }
                 })
-                console.log(arr)
              return arr
             }
         }

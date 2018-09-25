@@ -25,7 +25,6 @@ Vue.filter('highlight', (text,keyword,separate=false) => {
         if(separate){
             let sp=keyword.split(' ');
             for(let part of sp){
-                console.log(part);
                 ans=ans.replaceAll(part,'<em>'+part+'</em>')
             }
         }else {

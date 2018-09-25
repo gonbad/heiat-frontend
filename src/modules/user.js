@@ -20,7 +20,6 @@ const actions = {
         HTTP.get('auth/users/me/')
             .then(resp => {
                 commit(USER_SUCCESS, resp.data)
-                console.log(resp.data.email);
             })
             .catch(resp => {
                 commit(USER_ERROR)

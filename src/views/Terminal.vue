@@ -57,7 +57,6 @@
                 HTTP.get('expenses?format=json')
                     .then((resp) => {
                         this.expenses = _.mapValues(_.keyBy(resp.data, 'id'), 'expense_name')
-                        console.log(JSON.stringify(this.expenses))
                         if (this.fixed) {
                             this.fix_expense_name = this.expenses[this.expense_id]
                             if (!this.fix_expense_name) {
@@ -74,10 +73,8 @@
                 e.preventDefault();
                 this.status = 'sending';
                 HTTP.post('pay/terminal/start/', {'amount': this.amount, 'expense_id': this.expense_id}).then(resp => {
-                    console.log(resp.data);
                     this.refId = resp.data
                     this.$refs.refref.value = resp.data
-                    console.log(formToJson(this.$refs.hiddenForm))
                     this.$refs.hiddenForm.submit();
                 })
             },

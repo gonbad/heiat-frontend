@@ -120,7 +120,6 @@
                     delete obj['student_number']
                 }
                     HTTP.patch('accounts/profile/', obj).then(resp => {
-                    console.log(resp.data);
                     this.$store.commit(PROFILE_SUCCESS, resp.data);
                     this.status = 'saved'
                 })

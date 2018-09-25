@@ -74,7 +74,6 @@
                 e.preventDefault();
                 this.status = 'sending';
                 HTTP.post('accounts/couple/', {'melli_code':this.melliCode}).then(resp => {
-                    console.log(resp.data);
                     this.status = 'saved'
                     this.$store.commit(COUPLE_SUCCESS, resp.data);
                     this.$parent.user.profile.couple=resp.data;

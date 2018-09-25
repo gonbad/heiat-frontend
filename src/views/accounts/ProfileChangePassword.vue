@@ -59,7 +59,6 @@
                 e.preventDefault();
                 this.status = 'sending';
                 HTTP.post('auth/password/', {'current_password': this.current_password,'new_password': this.new_password}).then(resp => {
-                    console.log(resp.data);
                     this.status = 'saved'
                 }).catch(error => {
                     if (error.response) {

@@ -68,7 +68,6 @@
                 e.preventDefault();
                 this.status='sending';
                 HTTP.patch('auth/users/me/', this.$parent.user).then(resp => {
-                    console.log(resp.data);
                     this.$store.commit(USER_SUCCESS, resp.data);
                     this.status='saved'
                 })

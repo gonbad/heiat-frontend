@@ -69,7 +69,6 @@
                     'uid': this.$route.params.uid,
                     'token': this.$route.params.token
                 }).then(resp => {
-                    console.log(resp.data);
                     this.status = 'saved'
                 }).catch(error => {
                     if (error.response) {

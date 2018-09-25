@@ -16,7 +16,6 @@ const actions = {
             commit(AUTH_REQUEST)
             HTTP.post('auth/token/login/', user)
                 .then(resp => {
-                    console.log(resp);
                     localStorage.setItem('user-token', resp.data.auth_token)
                     // Here set the header of your ajax library to the token value.
                     // example with axios

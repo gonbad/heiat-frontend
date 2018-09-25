@@ -30,7 +30,6 @@
         },
         created(){
             this.$store.watch((state, getters) => getters.getUser, () => {
-                console.log('watch'+JSON.stringify(this.$store.getters.getUser));
                 this.user=JSON.parse( JSON.stringify( this.$store.getters.getUser ))
             })
         },

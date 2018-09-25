@@ -77,7 +77,6 @@
                     console.log('date error')
                 }
                 HTTP.patch('accounts/profile/', this.$parent.user.profile).then(resp => {
-                    console.log(resp.data);
                     this.$store.commit(PROFILE_SUCCESS, resp.data);
                     this.status = 'saved'
                 })

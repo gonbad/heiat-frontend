@@ -55,7 +55,6 @@
                 e.preventDefault();
                 this.status = 'sending';
                 HTTP.post('auth/password/reset/', {'email':this.email}).then(resp => {
-                    console.log(resp.data);
                     this.status = 'success'
                 }).catch(error =>{
                     if(error.response) {

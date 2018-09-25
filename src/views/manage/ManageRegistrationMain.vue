@@ -21,6 +21,17 @@
         <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
     </b-button>
 </div>
+<div v-if="$parent.$parent.program.questions.length>0">
+    <b-form-select v-model="question_id" :options="questions" style="width: 35%" />
+    <b-form-select v-model="yes"  style="width: 35%" >
+        <option :value="false">خیر</option>
+        <option :value="true">بله</option>
+    </b-form-select>
+    <b-button @click="changeAnswer" variant="primary" :disabled="status==='sending' || question_id===null || yes=== null">
+        <span v-show="status!=='sending'">تغییر</span>
+        <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+    </b-button>
+</div>
             </b-col>
         </b-row>
 
@@ -39,7 +50,9 @@
             return {
                 status: 'default',
                 new_status:'default',
-                STATUS_CHOICES:STATUS_CHOICES
+                STATUS_CHOICES:STATUS_CHOICES,
+                question_id:null,
+                yes:null
             }
         },
         created() {
@@ -54,8 +67,24 @@
                     this.status = 'error'
                 })
             },
+            changeAnswer(){
+                this.status='sending';
+                HTTP.post('manage_registration/'+this.$route.params.registration_id+'/change_answer/', {question_id:this.question_id,yes:this.yes}).then(resp => {
+                    this.$parent.registration=resp.data;
+                    this.status='default'
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
         },
-        computed: {}
+        computed: {
+            questions(){
+                return _.reduce(this.$parent.$parent.program.questions,(obj,item)=>{
+                    obj[item.id]=item.title
+                    return obj
+                },{})
+            }
+        }
     }
 </script>
 <style>
