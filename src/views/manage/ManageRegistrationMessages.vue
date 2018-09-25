@@ -48,8 +48,6 @@
                     this.messages.push(resp.data);
                     this.status='default'
                     this.newMessageText=''
-                }).catch(error => {
-                    this.status = 'error'
                 })
             },
             fetchData(){

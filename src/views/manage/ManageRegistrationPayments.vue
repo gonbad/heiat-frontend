@@ -25,7 +25,7 @@
         methods: {
 
             fetchData(){
-                HTTP.get('manage_registration/'+this.$route.params.registration_id+'/payments').then(resp => {
+                HTTP.get('manage_registration/'+this.$route.params.registration_id+'/payments/?format=json').then(resp => {
                     this.payments=resp.data
                 })
             }

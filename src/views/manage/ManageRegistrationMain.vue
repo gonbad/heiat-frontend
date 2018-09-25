@@ -15,7 +15,7 @@
             </b-col>
             <b-col>
 <div>
-    <b-form-select v-model="new_status" :options="STATUS_CHOICES" style="width: 50%" />
+    <b-form-select v-model="$parent.registration.status" :options="STATUS_CHOICES" style="width: 50%" />
     <b-button @click="changeStatus" variant="primary" :disabled="status==='sending'">
         <span v-show="status!=='sending'">تغییر وضعیت</span>
         <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
@@ -49,7 +49,6 @@
         data() {
             return {
                 status: 'default',
-                new_status:'default',
                 STATUS_CHOICES:STATUS_CHOICES,
                 question_id:null,
                 yes:null
@@ -60,7 +59,7 @@
         methods: {
             changeStatus(){
                 this.status='sending';
-                HTTP.post('manage_registration/'+this.$route.params.registration_id+'/change_status/', {status:this.new_status}).then(resp => {
+                HTTP.post('manage_registration/'+this.$route.params.registration_id+'/change_status/', {status:this.$parent.registration.status}).then(resp => {
                     this.$parent.registration=resp.data;
                     this.status='default'
                 }).catch(error => {
