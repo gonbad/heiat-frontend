@@ -53,7 +53,7 @@
                 })
             },
             fetchData(){
-                HTTP.get('manage_registration/'+this.$route.params.registration_id+'/messages').then(resp => {
+                HTTP.get('manage_registration/'+this.$route.params.registration_id+'/messages/?format=json').then(resp => {
                     this.messages=resp.data
                 })
             }
