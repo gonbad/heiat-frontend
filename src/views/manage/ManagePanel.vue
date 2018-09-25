@@ -170,6 +170,33 @@
             </b-table>
 
         </div>
+        <hr>
+        <b-row>
+                <b-col>
+                    <div>
+                        <b-form-select v-model="new_status" :options="STATUS_CHOICES" style="width: 50%" />
+                        <b-button @click="changeStatus" variant="primary" :disabled="status==='sending'">
+                            <span v-show="status!=='sending'">تغییر وضعیت</span>
+                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                        </b-button>
+                    </div>
+                    <div v-if="$parent.program.questions.length>0">
+                        <b-form-select v-model="question_id" :options="questions" style="width: 35%" />
+                        <b-form-select v-model="yes"  style="width: 35%" >
+                            <option :value="false">خیر</option>
+                            <option :value="true">بله</option>
+                        </b-form-select>
+                        <b-button @click="changeAnswer" variant="primary" :disabled="status==='sending' || question_id===null || yes=== null">
+                            <span v-show="status!=='sending'">تغییر</span>
+                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                        </b-button>
+                    </div>
+
+                </b-col>
+            <b-col>
+
+            </b-col>
+        </b-row>
     </div>
 
 </template>
@@ -177,7 +204,7 @@
     import {HTTP, exportExcel} from '@/utils/index';
     import {mapGetters, mapState} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-    import {STATUS_VALUES, PEOPLE_TYPE_VALUES, CONSCRIPTION_VALUES} from '@/utils/choices'
+    import {STATUS_CHOICES,STATUS_VALUES, PEOPLE_TYPE_VALUES, CONSCRIPTION_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',
@@ -206,7 +233,12 @@
                     ..._.reduce(this.$parent.program.questions, (obj, question) => {
                         obj[question.title] = []
                     }, {})
-                }
+                },
+                STATUS_CHOICES:STATUS_CHOICES,
+                new_status:'default',
+                status:'default',
+                question_id:null,
+                yes:null
 
             }
         },
@@ -219,7 +251,7 @@
             fetchData() {
                 this.fetchStatus = 'fetching'
                 HTTP.get('manage/' + this.$route.params.program_id + '/registrations/?format=json').then(resp => {
-                    this.registrations = flatRegistrations(resp.data, this.$parent.program.questions)
+                    this.registrations = resp.data;
                     this.fetchStatus = 'fetched'
                 }).catch(error => {
                     this.fetchStatus = 'error'
@@ -227,7 +259,28 @@
             },
             excel() {
                 exportExcel(this.filtered)
-            }
+            },
+            changeStatus() {
+                this.status = 'sending';
+                HTTP.post('manage/' + this.$route.params.program_id + '/change_status/', {
+                    status: this.new_status,
+                    ids: _.map(this.filtered, 'ردیف')
+                }).then(resp => {
+                    this.registrations = resp.data;
+                    this.status = 'default'
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
+            changeAnswer(){
+                this.status='sending';
+                HTTP.post('manage/'+this.$route.params.program_id+'/change_answer/', {question_id:this.question_id,yes:this.yes,ids: _.map(this.filtered, 'ردیف')}).then(resp => {
+                    this.registrations=resp.data;
+                    this.status='default'
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
         },
         computed: {
             ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isProfileCompleted', 'isMarried']),
@@ -235,8 +288,17 @@
                 let year = Number(this.$parent.program.year.toString().slice(-2))
                 return [...Array(year + 1).keys()].slice(year - 4)
             },
+            questions(){
+                return _.reduce(this.$parent.program.questions,(obj,item)=>{
+                    obj[item.id]=item.title
+                    return obj
+                },{})
+            },
+            flat(){
+                return flatRegistrations(this.registrations, this.$parent.program.questions)
+            },
             filtered() {
-                return _.filter(this.registrations, item => {
+                return _.filter(this.flat, item => {
                     if (this.filter.status.length > 0) {
                         if (!_.includes(this.filter.status, item['وضعیت'])) {
                             return false;
