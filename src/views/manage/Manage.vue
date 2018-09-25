@@ -6,6 +6,7 @@
                 {{program.title}}
             </b-nav-item>
             <b-nav-item :to="{name:'Manage.Posts'}">اطلاعیه‌ها</b-nav-item>
+            <b-nav-item :to="{name:'Manage.Questions'}">سوالات و برچسب‌ها</b-nav-item>
             <b-nav-item :to="{name:'Manage.Inbox'}">صندوق پیام‌ها</b-nav-item>
         </b-nav>
         <p v-if="isLoading">
