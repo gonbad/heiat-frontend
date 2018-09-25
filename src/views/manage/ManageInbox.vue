@@ -54,7 +54,7 @@
         },
         computed: {
             ordered(){
-                return _.orderBy(this.registrations,'message.send_date','asc')
+                return _.orderBy(this.registrations,'message.send_date','desc')
             }
         }
     }
