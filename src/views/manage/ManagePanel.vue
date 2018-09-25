@@ -203,7 +203,25 @@
                     </div>
                 </b-col>
             <b-col>
+                <div >
+                                <textarea v-model="newMessageText" style="width: 100%">
 
+                                </textarea>
+                    <b-button @click="send" variant="primary" :disabled="status==='sending' || newMessageText===''">
+                        <span v-show="status!=='sending'">ارسال</span>
+                        <span v-show="status==='sending'">در حال ارسال</span>
+                    </b-button>
+                    <label>
+                        ارسال پیامک
+                    </label>
+                    <input type="checkbox" v-model="send_sms"/>
+                    <label>
+                        تعداد حرف:
+                    </label>
+                    <span>
+                {{newMessageText.length | pNumber}}
+            </span>
+                </div>
             </b-col>
         </b-row>
     </div>
@@ -248,7 +266,9 @@
                 status:'default',
                 question_id:null,
                 yes:null,
-                chances:0
+                chances:0,
+                newMessageText:'',
+                send_sms:false,
 
             }
         },
@@ -290,6 +310,20 @@
                 }).then(resp => {
                     this.registrations = resp.data;
                     this.status = 'default'
+                }).catch(error => {
+                    this.status = 'error'
+                })
+            },
+            send() {
+                this.status = 'sending';
+                HTTP.post('manage/' + this.$route.params.program_id + '/bulk_message/', {
+                    text: this.newMessageText,
+                    send_sms:this.send_sms,
+                    ids: _.map(this.filtered, 'ردیف')
+                }).then(resp => {
+                    this.status = 'default'
+                    this.newMessageText=''
+                    this.send_sms=false;
                 }).catch(error => {
                     this.status = 'error'
                 })
