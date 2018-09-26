@@ -76,6 +76,10 @@
                 }catch (e){
                     console.log('date error')
                 }
+                if(this.$parent.user.profile.passport!=='have'){
+                    delete obj.passport_date_of_issue
+                    delete obj.passport_date_of_expiry
+                }
                 HTTP.patch('accounts/profile/', this.$parent.user.profile).then(resp => {
                     this.$store.commit(PROFILE_SUCCESS, resp.data);
                     this.status = 'saved'
