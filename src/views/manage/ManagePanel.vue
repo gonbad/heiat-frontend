@@ -258,7 +258,8 @@
                     level: [],
                     year: [],
                     ..._.reduce(this.$parent.program.questions, (obj, question) => {
-                        obj[question.title] = []
+                        obj[question.title] = [];
+                        return obj;
                     }, {})
                 },
                 STATUS_CHOICES:STATUS_CHOICES,
