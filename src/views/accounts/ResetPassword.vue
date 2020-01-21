@@ -6,24 +6,24 @@
     <div>
         <br>
         <b-container>
-                <b-form @submit="onSubmit" v-if="status!=='success'">
-                    <b-form-group label="ایمیل خود را برای ارسال لینک بازنشانی وارد کنید:">
-                        <b-form-input type="email"
-                                      v-model="email"
-                                      placeholder="ایمیل">
-                        </b-form-input>
-                    </b-form-group>
+            <b-form @submit="onSubmit" v-if="status!=='success'">
+                <b-form-group label="کد ملی خود را برای بازنشانی رمز عبور وارد کنید:">
+                    <b-form-input type="number"
+                                  v-model="user.username"
+                                  placeholder="کد ملی">
+                    </b-form-input>
+                </b-form-group>
 
-                    <b-button type="submit" variant="primary" :disabled="status==='sending'">
-                        <span v-show="status!=='sending'">ارسال لینک بازنشانی</span>
-                        <span v-show="status==='sending'">در حال انجام</span>
-                    </b-button>
-                </b-form>
+                <b-button type="submit" variant="primary" :disabled="status==='sending'">
+                    <span v-show="status!=='sending'">تغییر رمز عبور</span>
+                    <span v-show="status==='sending'">در حال انجام</span>
+                </b-button>
+            </b-form>
             <p v-if="status==='success'">
-                لینک بازنشانی به ایمیل شما فرستاده شد
+                {{ text }}
             </p>
             <p v-if="status==='error'">
-               عملیات با مشکل مواجه شد
+                {{ text }}
             </p>
 
         </b-container>
@@ -36,9 +36,8 @@
 </style>
 
 <script>
-    import {COUPLE_SUCCESS} from '@/utils/constants'
+    import {validateMelliCode} from "../../utils/validators";
     import {formToJson, HTTP} from '@/utils'
-    import {validateMelliCode} from '@/utils/validators'
     import {required} from 'vuelidate/lib/validators'
 
 
@@ -47,18 +46,31 @@
         data() {
             return {
                 status: 'default',
-                email:'',
+                text: 'عملیات با مشکل مواجه شد.',
+                user: {
+                    username: ''
+                },
+                validations: {
+                    user: {
+                        username: {
+                            required,
+                            validateMelliCode
+                        },
+                    }
+                }
             }
         },
         methods: {
             onSubmit: function (e) {
                 e.preventDefault();
                 this.status = 'sending';
-                HTTP.post('auth/password/reset/', {'email':this.email}).then(resp => {
-                    this.status = 'success'
-                }).catch(error =>{
-                    if(error.response) {
-                        this.status = 'error'
+                HTTP.post('accounts/password/reset/', {'username': this.user.username}).then(resp => {
+                    this.status = 'success';
+                    this.text = resp.data;
+                }).catch(error => {
+                    if (error.response) {
+                        this.status = 'error';
+                        this.text = error.response.data;
                     }
                 })
             }
