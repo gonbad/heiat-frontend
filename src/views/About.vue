@@ -14,7 +14,7 @@
 راه‌های ارتباطی با مسئولان چیست؟
            </div>
            <div class="answer-item">
-برای گزارش مشکلات فنی و ارائه پیشنهادات می‌توانید به شناسه @omidbaharloo در پیام‌رسان بله پیام بفرستید.
+برای گزارش مشکلات فنی و ارائه پیشنهادات می‌توانید به شناسه @aaaaalllliii در پیام‌رسان بله پیام بفرستید.
                <br>
                و نیز سوالات و مشکلات خود در مورد برنامه‌ها را نیز می‌توانید از طریق کانال‌های ارتباطی مختص هر برنامه-که در اطلاعیه‌ها می‌آید- پیگیری کنید.
 <br>
@@ -60,42 +60,6 @@
            </div>
            <div class="answer-item">
 این سامانه روی نسخه‌های جدید Google Chrome و Firefox و سیستم‌عامل لینوکس تست شده است و البته احتمالا روی سیستم عامل ویندوز و مک نیز مشکلی نباشد.
-           </div>
-           <hr>
-       </div>
-        <div class="qa">
-           <div class="question-item">
-
-           </div>
-           <div class="answer-item">
-
-           </div>
-           <hr>
-       </div>
-        <div class="qa">
-           <div class="question-item">
-
-           </div>
-           <div class="answer-item">
-
-           </div>
-           <hr>
-       </div>
-        <div class="qa">
-           <div class="question-item">
-
-           </div>
-           <div class="answer-item">
-
-           </div>
-           <hr>
-       </div>
-        <div class="qa">
-           <div class="question-item">
-
-           </div>
-           <div class="answer-item">
-
            </div>
            <hr>
        </div>

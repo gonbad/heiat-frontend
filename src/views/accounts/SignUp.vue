@@ -45,7 +45,7 @@
                     <span class="error" v-for="e in error.password">{{e}}</span>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary" :disabled="status==='sending'|| $v.$invalid">
+                <b-button type="submit" variant="success" :disabled="status==='sending'|| $v.$invalid">
                     <span v-show="status!=='sending'">ایجاد حساب کاربری</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
                 </b-button>

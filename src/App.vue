@@ -1,10 +1,13 @@
 <template>
     <div id="app" class="rtl">
-        <b-navbar toggleable="md" type="dark" variant="info">
+        <b-navbar toggleable="md" type="dark" variant="success">
 
-            <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
+            <b-navbar-toggle target="nav_collapse"/>
 
-            <b-navbar-brand :to="{ name: 'Home' }" exact>هیات الزهرا دانشگاه صنعتی شریف</b-navbar-brand>
+            <b-navbar-brand :to="{ name: 'Home' }" exact>
+                <b-img-lazy src="/logo-light.png" width="60px"/>
+                هیات الزهرا دانشگاه صنعتی شریف
+            </b-navbar-brand>
 
             <b-collapse is-nav id="nav_collapse">
 

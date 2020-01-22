@@ -21,7 +21,7 @@
                     <span class="error" v-for="e in error.password">{{e}}</span>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary" :disabled="status==='sending'">
+                <b-button type="submit" variant="success" :disabled="status==='sending'">
                     <span v-show="status!=='sending'">ورود</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
                 </b-button>
