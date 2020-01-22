@@ -69,7 +69,7 @@
                             <b-form-select v-model="$parent.program.state" :options="PROGRAM_STATE_CHOICES"/>
                         </b-form-group>
 
-                        <b-button @click="save()" variant="primary" :disabled="status==='sending'">
+                        <b-button :disabled="status==='sending'" @click="save()" variant="success">
                             <span v-show="status==='default'">ویرایش</span>
                             <span v-show="status==='sending'">در حال ارسال</span>
                             <span v-show="status==='saved'">ذخیره شد</span>
@@ -104,8 +104,7 @@
 <script>
     import {HTTP} from '@/utils/index';
     import Shift from "../../components/Shift";
-    import _ from 'lodash'
-    import {PEOPLE_TYPE_KEYS,PROGRAM_TYPE_CHOICES,PROGRAM_STATE_CHOICES} from '@/utils/choices'
+    import {PEOPLE_TYPE_KEYS, PROGRAM_STATE_CHOICES, PROGRAM_TYPE_CHOICES} from '@/utils/choices'
 
     export default {
         components: {Shift},

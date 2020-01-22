@@ -15,7 +15,7 @@
                 </b-form-input>
             </b-form-group>
 
-            <b-button type="submit" variant="primary" :disabled="status==='sending' || !expense_id || !amount">
+            <b-button :disabled="status==='sending' || !expense_id || !amount" type="submit" variant="success">
                 <span v-show="status!=='sending'">پرداخت</span>
                 <span v-show="status==='sending'">در حال انجام</span>
             </b-button>
@@ -28,7 +28,7 @@
 </template>
 
 <script>
-    import {HTTP, formToJson} from '@/utils'
+    import {HTTP} from '@/utils'
     import _ from 'lodash'
 
     export default {

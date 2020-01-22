@@ -1,5 +1,5 @@
 <template>
-    <div dir="rtl">
+    <b-container fluid>
         <b-row>
             <b-col>
                 <h1>
@@ -131,12 +131,12 @@
             <input ref="refref" type="hidden" name="RefId" :value="refId">
             <input type="submit" value="go" style="display: none;">
         </form>
-    </div>
+    </b-container>
 
 </template>
 <script>
     import {HTTP} from '../utils/index';
-    import {mapGetters, mapState} from 'vuex'
+    import {mapGetters} from 'vuex'
     import {STATUS_CHOICES} from '@/utils/choices'
 
 

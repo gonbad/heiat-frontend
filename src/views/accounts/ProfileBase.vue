@@ -50,7 +50,7 @@
                     <span class="error" v-if="!$v.$parent.user.profile.student_number.validateStudentNumber">فرمت شماره دانشجویی درست نیست</span>
                 </b-form-group>
 
-                <b-button type="submit" variant="primary" :disabled="status==='sending' || $v.$invalid">
+                <b-button :disabled="status==='sending' || $v.$invalid" type="submit" variant="success">
                     <span v-show="status==='default'">ذخیره</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
                     <span v-show="status==='saved'">ذخیره شد</span>
@@ -67,10 +67,9 @@
 
 <script>
     import {PROFILE_SUCCESS} from '@/utils/constants'
-    import {formToJson, HTTP} from '@/utils'
-    import { validateMobile, validateStudentNumber} from '@/utils/validators'
+    import {HTTP} from '@/utils'
+    import {validateMobile, validateStudentNumber} from '@/utils/validators'
     import {required} from 'vuelidate/lib/validators'
-    import _ from 'lodash';
     import moment from 'moment-jalaali'
     import {PEOPLE_TYPE_CHOICES} from '@/utils/choices'
 

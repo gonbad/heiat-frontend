@@ -37,7 +37,7 @@
                                   placeholder="Enter name">
                     </b-form-input>
                 </b-form-group>
-                <b-button type="submit" variant="primary" :disabled="status==='sending'">
+                <b-button :disabled="status==='sending'" type="submit" variant="success">
                     <span v-show="status==='default'">ذخیره</span>
                     <span v-show="status==='sending'">در حال ارسال</span>
                     <span v-show="status==='saved'">ذخیره شد</span>
@@ -54,7 +54,7 @@
 
 <script>
     import {USER_SUCCESS} from '@/utils/constants'
-    import {formToJson, HTTP} from '@/utils'
+    import {HTTP} from '@/utils'
 
     export default {
         name: 'ProfileUser',

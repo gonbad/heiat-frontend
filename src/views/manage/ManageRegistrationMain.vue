@@ -16,7 +16,7 @@
             <b-col>
 <div>
     <b-form-select v-model="$parent.registration.status" :options="STATUS_CHOICES" style="width: 50%" />
-    <b-button @click="changeStatus" variant="primary" :disabled="status==='sending'">
+    <b-button :disabled="status==='sending'" @click="changeStatus" variant="success">
         <span v-show="status!=='sending'">تغییر وضعیت</span>
         <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
     </b-button>
@@ -27,7 +27,8 @@
         <option :value="false">خیر</option>
         <option :value="true">بله</option>
     </b-form-select>
-    <b-button @click="changeAnswer" variant="primary" :disabled="status==='sending' || question_id===null || yes=== null">
+    <b-button :disabled="status==='sending' || question_id===null || yes=== null" @click="changeAnswer"
+              variant="success">
         <span v-show="status!=='sending'">تغییر</span>
         <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
     </b-button>

@@ -175,7 +175,7 @@
                 <b-col>
                     <div>
                         <b-form-select v-model="new_status" :options="STATUS_CHOICES" style="width: 50%" />
-                        <b-button @click="changeStatus" variant="primary" :disabled="status==='sending'">
+                        <b-button :disabled="status==='sending'" @click="changeStatus" variant="success">
                             <span v-show="status!=='sending'">تغییر وضعیت</span>
                             <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
                         </b-button>
@@ -186,7 +186,8 @@
                             <option :value="false">خیر</option>
                             <option :value="true">بله</option>
                         </b-form-select>
-                        <b-button @click="changeAnswer" variant="primary" :disabled="status==='sending' || question_id===null || yes=== null">
+                        <b-button :disabled="status==='sending' || question_id===null || yes=== null"
+                                  @click="changeAnswer" variant="success">
                             <span v-show="status!=='sending'">تغییر</span>
                             <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
                         </b-button>
@@ -196,7 +197,7 @@
                             تعداد برای قرعه‌کشی:
                         </label>
                         <input type="number" v-model="chances"/>
-                        <b-button @click="draw" variant="primary" :disabled="status==='sending' || chances<=0">
+                        <b-button :disabled="status==='sending' || chances<=0" @click="draw" variant="success">
                             <span v-show="status!=='sending'">قرعه‌کشی</span>
                             <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
                         </b-button>
@@ -207,7 +208,7 @@
                                 <textarea v-model="newMessageText" style="width: 100%">
 
                                 </textarea>
-                    <b-button @click="send" variant="primary" :disabled="status==='sending' || newMessageText===''">
+                    <b-button :disabled="status==='sending' || newMessageText===''" @click="send" variant="success">
                         <span v-show="status!=='sending'">ارسال</span>
                         <span v-show="status==='sending'">در حال ارسال</span>
                     </b-button>
@@ -228,10 +229,10 @@
 
 </template>
 <script>
-    import {HTTP, exportExcel} from '@/utils/index';
-    import {mapGetters, mapState} from 'vuex'
+    import {exportExcel, HTTP} from '@/utils/index';
+    import {mapGetters} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
-    import {STATUS_CHOICES,STATUS_VALUES, PEOPLE_TYPE_VALUES, CONSCRIPTION_VALUES} from '@/utils/choices'
+    import {CONSCRIPTION_VALUES, PEOPLE_TYPE_VALUES, STATUS_CHOICES, STATUS_VALUES} from '@/utils/choices'
 
     export default {
         name: 'ManagePanel',

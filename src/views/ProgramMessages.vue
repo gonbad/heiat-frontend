@@ -6,7 +6,7 @@
                                 <textarea v-model="newMessageText" style="width: 100%">
 
                                 </textarea>
-            <b-button @click="send" variant="primary" :disabled="status==='sending' || newMessageText===''">
+            <b-button :disabled="status==='sending' || newMessageText===''" @click="send" variant="success">
                 <span v-show="status!=='sending'">ارسال</span>
                 <span v-show="status==='sending'">در حال ارسال</span>
             </b-button>
@@ -16,7 +16,6 @@
 
 <script>
     import {HTTP} from '@/utils'
-    import _ from 'lodash'
     import Messages from "../components/Messages";
 
     export default {
