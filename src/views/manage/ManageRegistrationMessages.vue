@@ -1,7 +1,7 @@
 <template>
-    <div dir="rtl" class="container">
-<messages :messages="messages"></messages>
-        <div >
+    <b-container fluid>
+        <messages :messages="messages"></messages>
+        <div>
                                 <textarea v-model="newMessageText" style="width: 100%">
 
                                 </textarea>
@@ -20,7 +20,7 @@
                 {{newMessageText.length | pNumber}}
             </span>
         </div>
-    </div>
+    </b-container>
 
 </template>
 <script>

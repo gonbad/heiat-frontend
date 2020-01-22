@@ -1,5 +1,5 @@
 <template>
-    <div dir="rtl">
+    <b-container fluid>
         <div class="well">
             <b-container>
                 <b-row>
@@ -45,7 +45,7 @@
             </b-container>
 
         </div>
-    </div>
+    </b-container>
 
 </template>
 <script>

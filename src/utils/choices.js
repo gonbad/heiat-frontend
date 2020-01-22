@@ -13,7 +13,7 @@ export const PEOPLE_TYPE_CHOICES = {
     "sharif student": "دانشجو شریف",
     "sharif graduated": "فارغ التحصیل شریف",
     "sharif graduated student not sharif": "فارغ التحصیل شریف و دانشجو سایر",
-    "sharif graduated talabe": "فاغ التحصیل شریف و طلبه فعلی",
+    "sharif graduated talabe": "فارغ التحصیل شریف و طلبه فعلی",
     "sharif master": "استاد شریف",
     "sharif employed": "کارمند شریف",
     "talabe": "طلبه",

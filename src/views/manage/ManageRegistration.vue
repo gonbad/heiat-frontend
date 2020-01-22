@@ -1,14 +1,14 @@
 <template>
-    <div dir="rtl">
+    <b-container fluid>
         <b-nav fill tabs>
             <b-nav-item :to="{name:'Manage.Registration.Main'}" exact>
                 {{registration.profile.user.name}}
             </b-nav-item>
             <b-nav-item :to="{name:'Manage.Registration.Payments'}">
-               گزارش مالی
+                گزارش مالی
             </b-nav-item>
             <b-nav-item :to="{name:'Manage.Registration.Messages'}">
-               پیام‌ها
+                پیام‌ها
             </b-nav-item>
         </b-nav>
         <p v-if="isLoading">
@@ -18,7 +18,7 @@
             <br>
             <router-view></router-view>
         </div>
-    </div>
+    </b-container>
 </template>
 <script>
     import {HTTP} from '@/utils/index';

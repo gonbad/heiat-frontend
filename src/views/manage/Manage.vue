@@ -1,5 +1,5 @@
 <template>
-    <div dir="rtl">
+    <b-container fluid>
         <b-nav fill tabs>
             <b-nav-item :to="{name:'Manage.Program'}">
                 کلیات برنامه
@@ -19,7 +19,7 @@
             <br>
             <router-view></router-view>
         </div>
-    </div>
+    </b-container>
 </template>
 <script>
     import {HTTP} from '@/utils/index';

@@ -1,12 +1,11 @@
 <template>
     <div>
-        <payments :payments="payments"></payments>
+        <payments :payments="payments"/>
     </div>
 
 </template>
 <script>
     import {HTTP} from '@/utils/index';
-    import Messages from "../../components/Messages";
     import Payments from "../../components/Payments";
 
 

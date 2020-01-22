@@ -1,5 +1,5 @@
 <template>
-    <div dir="rtl">
+    <b-container fluid>
         <div class="well">
             <b-container>
                 <wysiwyg v-model="newPost"/>
@@ -16,7 +16,7 @@
             </b-container>
 
         </div>
-    </div>
+    </b-container>
 
 </template>
 <script>
