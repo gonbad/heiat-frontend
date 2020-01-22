@@ -36,8 +36,8 @@ This set of fonts are used in this project under the license: (.....)
     font-family: Sahel;
     font-style: normal;
     font-weight: 500;
-    src: url('../Sahel-FD.eot');
-    src: url('../Sahel-FD.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../Sahel-FD.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../Sahel-FD.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../Sahel-FD.ttf') format('truetype');
+    src: url('../Sahel-SemiBold-FD.eot');
+    src: url('../Sahel-SemiBold-FD.eot?#iefix') format('embedded-opentype'), /* IE6-8 */ url('../Sahel-SemiBold-FD.woff2') format('woff2'), /* FF39+,Chrome36+, Opera24+*/ url('../Sahel-SemiBold-FD.woff') format('woff'), /* FF3.6+, IE9, Chrome6+, Saf5.1+*/ url('../Sahel-SemiBold-FD.ttf') format('truetype');
 }
 
 @font-face {

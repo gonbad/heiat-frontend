@@ -1,7 +1,7 @@
 <template>
     <div class="container">
         <h3 class=" text-center">جعبه پیام‌ها</h3>
-        <messages :messages="$parent.program.registration.messages"></messages>
+        <messages :messages="$parent.program.registration.messages"/>
         <div>
                                 <textarea v-model="newMessageText" style="width: 100%">
 
