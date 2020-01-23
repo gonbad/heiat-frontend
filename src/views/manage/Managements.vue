@@ -1,12 +1,11 @@
 <template>
-    <b-container fluid>
+    <b-container>
         <div class="well">
             <b-table striped hover :items="managements" :fields="fields" outlined bordered>
-                <template slot="title_id" slot-scope="data">
-                    <router-link :to="{name:'Manage.Panel',params:{program_id:data.item.program.id}}">
-                        {{data.item.program.title}}
-                    </router-link>
+                <template v-slot:cell(title_id)="data">
+                    <a :href="'/manage/' + data.item.program.id">{{data.item.program.title}}</a>
                 </template>
+
             </b-table>
         </div>
 
@@ -22,8 +21,8 @@
             return {
                 managements: [],
                 fields: [
-                    { key: 'title_id', label: 'عنوان برنامه' },
-                    { key: 'role', label: 'مسئولیت' },
+                    {key: 'title_id', label: 'عنوان برنامه'},
+                    {key: 'role', label: 'مسئولیت'},
                 ],
             }
         },
@@ -39,6 +38,7 @@
             fetchData() {
                 HTTP.get('managements/?format=json')
                     .then((resp) => {
+                        console.log(resp.data);
                         this.managements = resp.data;
                     })
                     .catch((err) => {
