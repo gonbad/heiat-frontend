@@ -8,7 +8,7 @@
             </b-nav-item>
         </b-nav>
         <br>
-            <router-view></router-view>
+        <router-view/>
         </div>
 </template>
 <script>

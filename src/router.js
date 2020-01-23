@@ -128,9 +128,14 @@ export default new Router({
             ]
         },
         {
-            path: '/about',
-            name: 'About',
-            component: () => import(/* webpackChunkName: "about" */ './views/About.vue')
+            path: '/help/FAQ',
+            name: 'FAQ',
+            component: () => import(/* webpackChunkName: "about" */ './views/FAQ.vue')
+        },
+        {
+            path: '/help/status',
+            name: 'HelpStatus',
+            component: () => import(/* webpackChunkName: "about" */ './views/HelpStatus.vue')
         },
         {
             path: '/pay/terminal/:expense_id?',

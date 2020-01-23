@@ -35,7 +35,7 @@
                     </b-form-radio-group>
                 </b-form-group>
                 <b-form-group label="تاریخ تولد:">
-                    <pdatepicker v-model="$parent.user.profile.jalali__birth_date"></pdatepicker>
+                    <pdatepicker v-model="$parent.user.profile.jalali__birth_date"/>
                 </b-form-group>
                 <b-form-group label="وضعیت تحصیل:">
                     <b-form-select v-model="$parent.user.profile.people_type" :options="PEOPLE_TYPE_CHOICES"/>
@@ -67,6 +67,7 @@
 
 <script>
     import {PROFILE_SUCCESS} from '@/utils/constants'
+
     import {HTTP} from '@/utils'
     import {validateMobile, validateStudentNumber} from '@/utils/validators'
     import {required} from 'vuelidate/lib/validators'
@@ -115,10 +116,10 @@
                 this.status = 'sending';
                 let obj = this.$parent.user.profile;
                 obj.birth_date = moment(obj.jalali__birth_date, 'jYYYY/jM/jD').format('YYYY-MM-DD');
-                if (obj.people_type !== 'sharif student' && !obj.people_type.startsWith('sharif graduated')){
+                if (obj.people_type !== 'sharif student' && !obj.people_type.startsWith('sharif graduated')) {
                     delete obj['student_number']
                 }
-                    HTTP.patch('accounts/profile/', obj).then(resp => {
+                HTTP.patch('accounts/profile/', obj).then(resp => {
                     this.$store.commit(PROFILE_SUCCESS, resp.data);
                     this.status = 'saved'
                 })

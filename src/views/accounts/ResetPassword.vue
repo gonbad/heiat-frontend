@@ -16,7 +16,12 @@
 
                 <b-button :disabled="status==='sending'" type="submit" variant="success">
                     <span v-show="status!=='sending'">تغییر رمز عبور</span>
-                    <span v-show="status==='sending'">در حال انجام</span>
+                    <span v-show="status==='sending'">
+                              <b-spinner
+                                      label="در حال ارسال پیامک..."
+                                      variant="success"
+                              ></b-spinner>
+                    </span>
                 </b-button>
             </b-form>
             <p v-if="status==='success'">
