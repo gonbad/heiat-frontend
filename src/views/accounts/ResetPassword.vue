@@ -13,16 +13,20 @@
                                   placeholder="کد ملی">
                     </b-form-input>
                 </b-form-group>
+                <b-alert show variant="warning">
+                    <h4 class="alert-heading">اخطار!</h4>
+                    <p>
+                        درصورتی که دریافت پیامک‌های تبلیغاتی را برای سیم‌کارت خود غیر فعال کرده باشید به دلیل عدم امکان
+                        دریافت پیامک رمز عبور جدید برای شما ارسال نخواهد شد.
+                    </p>
+                </b-alert>
 
-                <b-button :disabled="status==='sending'" type="submit" variant="success">
-                    <span v-show="status!=='sending'">تغییر رمز عبور</span>
-                    <span v-show="status==='sending'">
-                              <b-spinner
-                                      label="در حال ارسال پیامک..."
-                                      variant="success"
-                              ></b-spinner>
-                    </span>
-                </b-button>
+                <b-form-group>
+                    <b-button :disabled="status==='sending'" type="submit" variant="success">
+                        <span v-show="status!=='sending'">تغییر رمز عبور</span>
+                        <span v-show="status==='sending'">درحال تغییر</span>
+                    </b-button>
+                </b-form-group>
             </b-form>
             <p v-if="status==='success'">
                 {{ text }}
