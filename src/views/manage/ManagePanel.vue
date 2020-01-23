@@ -148,6 +148,20 @@
         <hr>
         <div class="well">
             <b-table striped hover :items="filtered" :fields="fields" outlined bordered>
+                <template v-slot:cell(اعمال)="data">
+                    <router-link
+                            :to="{name:'Manage.Registration.Main',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                        <b-icon-info-fill/>
+                    </router-link>
+                    <router-link
+                            :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                        <b-icon-envelope-fill/>
+                    </router-link>
+                    <router-link
+                            :to="{name:'Manage.Registration.Payments',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                        <b-icon-wallet/>
+                    </router-link>
+                </template>
                 <template slot="اعمال" slot-scope="data">
                     <span>
                         <span class="icons">
@@ -155,10 +169,12 @@
                                 :to="{name:'Manage.Registration.Main',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
                             <i class="fa fa-info-circle"></i>
                         </router-link>
-                        <router-link :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                        <router-link
+                                :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
                             <i class="fa fa-envelope"></i>
                         </router-link>
-                        <router-link :to="{name:'Manage.Registration.Payments',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
+                        <router-link
+                                :to="{name:'Manage.Registration.Payments',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
                             <i class="fa fa-money"></i>
                         </router-link>
                         </span>
@@ -172,39 +188,39 @@
         </div>
         <hr>
         <b-row>
-                <b-col>
-                    <div>
-                        <b-form-select v-model="new_status" :options="STATUS_CHOICES" style="width: 50%" />
-                        <b-button :disabled="status==='sending'" @click="changeStatus" variant="success">
-                            <span v-show="status!=='sending'">تغییر وضعیت</span>
-                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
-                        </b-button>
-                    </div>
-                    <div v-if="$parent.program.questions.length>0">
-                        <b-form-select v-model="question_id" :options="questions" style="width: 35%" />
-                        <b-form-select v-model="yes"  style="width: 35%" >
-                            <option :value="false">خیر</option>
-                            <option :value="true">بله</option>
-                        </b-form-select>
-                        <b-button :disabled="status==='sending' || question_id===null || yes=== null"
-                                  @click="changeAnswer" variant="success">
-                            <span v-show="status!=='sending'">تغییر</span>
-                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
-                        </b-button>
-                    </div>
-                    <div>
-                        <label>
-                            تعداد برای قرعه‌کشی:
-                        </label>
-                        <input type="number" v-model="chances"/>
-                        <b-button :disabled="status==='sending' || chances<=0" @click="draw" variant="success">
-                            <span v-show="status!=='sending'">قرعه‌کشی</span>
-                            <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
-                        </b-button>
-                    </div>
-                </b-col>
             <b-col>
-                <div >
+                <div>
+                    <b-form-select :options="STATUS_CHOICES" style="width: 50%" v-model="new_status"/>
+                    <b-button :disabled="status==='sending'" @click="changeStatus" variant="success">
+                        <span v-show="status!=='sending'">تغییر وضعیت</span>
+                        <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                    </b-button>
+                </div>
+                <div v-if="$parent.program.questions.length>0">
+                    <b-form-select :options="questions" style="width: 35%" v-model="question_id"/>
+                    <b-form-select style="width: 35%" v-model="yes">
+                        <option :value="false">خیر</option>
+                        <option :value="true">بله</option>
+                    </b-form-select>
+                    <b-button :disabled="status==='sending' || question_id===null || yes=== null"
+                              @click="changeAnswer" variant="success">
+                        <span v-show="status!=='sending'">تغییر</span>
+                        <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                    </b-button>
+                </div>
+                <div>
+                    <label>
+                        تعداد برای قرعه‌کشی:
+                    </label>
+                    <input type="number" v-model="chances"/>
+                    <b-button :disabled="status==='sending' || chances<=0" @click="draw" variant="success">
+                        <span v-show="status!=='sending'">قرعه‌کشی</span>
+                        <span v-show="status==='sending'">لطفا کمی صبر کنید</span>
+                    </b-button>
+                </div>
+            </b-col>
+            <b-col>
+                <div>
                                 <textarea v-model="newMessageText" style="width: 100%">
 
                                 </textarea>
@@ -263,14 +279,14 @@
                         return obj;
                     }, {})
                 },
-                STATUS_CHOICES:STATUS_CHOICES,
-                new_status:'default',
-                status:'default',
-                question_id:null,
-                yes:null,
-                chances:0,
-                newMessageText:'',
-                send_sms:false,
+                STATUS_CHOICES: STATUS_CHOICES,
+                new_status: 'default',
+                status: 'default',
+                question_id: null,
+                yes: null,
+                chances: 0,
+                newMessageText: '',
+                send_sms: false,
 
             }
         },
@@ -320,21 +336,25 @@
                 this.status = 'sending';
                 HTTP.post('manage/' + this.$route.params.program_id + '/bulk_message/', {
                     text: this.newMessageText,
-                    send_sms:this.send_sms,
+                    send_sms: this.send_sms,
                     ids: _.map(this.filtered, 'ردیف')
                 }).then(resp => {
                     this.status = 'default'
-                    this.newMessageText=''
-                    this.send_sms=false;
+                    this.newMessageText = ''
+                    this.send_sms = false;
                 }).catch(error => {
                     this.status = 'error'
                 })
             },
-            changeAnswer(){
-                this.status='sending';
-                HTTP.post('manage/'+this.$route.params.program_id+'/change_answer/', {question_id:this.question_id,yes:this.yes,ids: _.map(this.filtered, 'ردیف')}).then(resp => {
-                    this.registrations=resp.data;
-                    this.status='default'
+            changeAnswer() {
+                this.status = 'sending';
+                HTTP.post('manage/' + this.$route.params.program_id + '/change_answer/', {
+                    question_id: this.question_id,
+                    yes: this.yes,
+                    ids: _.map(this.filtered, 'ردیف')
+                }).then(resp => {
+                    this.registrations = resp.data;
+                    this.status = 'default'
                 }).catch(error => {
                     this.status = 'error'
                 })
@@ -346,13 +366,13 @@
                 let year = Number(this.$parent.program.year.toString().slice(-2))
                 return [...Array(year + 1).keys()].slice(year - 4)
             },
-            questions(){
-                return _.reduce(this.$parent.program.questions,(obj,item)=>{
-                    obj[item.id]=item.title
+            questions() {
+                return _.reduce(this.$parent.program.questions, (obj, item) => {
+                    obj[item.id] = item.title
                     return obj
-                },{})
+                }, {})
             },
-            flat(){
+            flat() {
                 return flatRegistrations(this.registrations, this.$parent.program.questions)
             },
             filtered() {
@@ -437,7 +457,8 @@
     .form-check-inline .form-check-input {
         margin-right: 0;
     }
-    .icons a{
+
+    .icons a {
         margin-right: 5px;
     }
 </style>
