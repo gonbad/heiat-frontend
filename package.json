@@ -7,6 +7,7 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
     "axios": "^0.18.0",
     "bootstrap": "^4.4.1",
     "bootstrap-v4-rtl": "^4.1.1-0",

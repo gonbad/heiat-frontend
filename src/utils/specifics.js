@@ -1,6 +1,7 @@
-import {STATUS_CHOICES, PEOPLE_TYPE_CHOICES,CONSCRIPTION_CHOICES} from '@/utils/choices'
+import {CONSCRIPTION_CHOICES, PEOPLE_TYPE_CHOICES, STATUS_CHOICES} from '@/utils/choices'
 import _ from 'lodash'
 import moment from 'moment-jalaali'
+
 export  function flatRegistration(raw,questions=[]){
     let ans={}
     ans['ردیف']=raw.id
@@ -47,10 +48,27 @@ export  function flatRegistration(raw,questions=[]){
         year=Number(raw.profile.student_number.toString().substring(0,2))
     }
 
-    ans['مقطع']=level
-    ans['سال ورود']=year
+    ans['مقطع'] = level
+    ans['سال ورود'] = year
+    ans['بارکد'] = qrCodeEncrypt(ans['کد ملی'], ans['شماره موبایل'])
     return ans;
 }
-export function flatRegistrations(list,questions=[]){
-    return _.map(list,item => {return flatRegistration(item,questions)})
+
+export function flatRegistrations(list, questions = []) {
+    return _.map(list, item => {
+        return flatRegistration(item, questions)
+    })
+}
+
+let dict = {"0": "9", "1": "8", "2": "7", "3": "6", "4": "5", "5": "4", "6": "3", "7": "2", "8": "1", "9": "0"};
+
+function qrCodeEncrypt(username, mobile) {
+    let res = "";
+    for (let i = 0; i < 10; i++) {
+        res += dict[mobile.charAt(10 - i)];
+        res += dict[username.charAt(i)];
+    }
+    res += mobile.charAt(0);
+
+    return res
 }

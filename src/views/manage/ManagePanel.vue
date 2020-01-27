@@ -133,12 +133,12 @@
                         </b-button>
                     </div>
                 </b-col>
-                <b-col cols="2">
+                <b-col>
                     <b-button variant="info" v-b-toggle.show_columns>
                         ستون‌های جدول
                     </b-button>
                     <b-collapse id="show_columns">
-                        <b-form-checkbox-group stacked plain v-model="fields" :options="availableFields">
+                        <b-form-checkbox-group :options="availableFields" plain v-model="fields">
                         </b-form-checkbox-group>
                     </b-collapse>
 
@@ -147,7 +147,11 @@
         </div>
         <hr>
         <div class="well">
-            <b-table striped hover :items="filtered" :fields="fields" outlined bordered>
+            <b-table :fields="fields" :items="filtered" bordered class="table-responsive-md" hover outlined striped>
+                <template v-slot:cell(بارکد)="data">
+
+                    <qrcode :options="{width: 200}" :value="data.item['بارکد']" tag="img"></qrcode>
+                </template>
                 <template v-slot:cell(اعمال)="data">
                     <router-link
                             :to="{name:'Manage.Registration.Main',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
@@ -162,25 +166,7 @@
                         <b-icon-wallet/>
                     </router-link>
                 </template>
-                <template slot="اعمال" slot-scope="data">
-                    <span>
-                        <span class="icons">
-                        <router-link
-                                :to="{name:'Manage.Registration.Main',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
-                            <i class="fa fa-info-circle"></i>
-                        </router-link>
-                        <router-link
-                                :to="{name:'Manage.Registration.Messages',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
-                            <i class="fa fa-envelope"></i>
-                        </router-link>
-                        <router-link
-                                :to="{name:'Manage.Registration.Payments',params:{program_id:$parent.program.id,registration_id:data.item['ردیف']}}">
-                            <i class="fa fa-money"></i>
-                        </router-link>
-                        </span>
 
-                    </span>
-                </template>
 
 
             </b-table>
@@ -249,6 +235,10 @@
     import {mapGetters} from 'vuex'
     import {flatRegistrations} from '@/utils/specifics'
     import {CONSCRIPTION_VALUES, PEOPLE_TYPE_VALUES, STATUS_CHOICES, STATUS_VALUES} from '@/utils/choices'
+    import VueQrcode from '@chenfengyuan/vue-qrcode';
+    import Vue from 'vue';
+
+    Vue.component("qrcode", VueQrcode);
 
     export default {
         name: 'ManagePanel',
@@ -256,7 +246,7 @@
         data() {
             return {
                 registrations: [],
-                availableFields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'متاهلی', 'جنسیت', 'تعداد قسط', 'تاریخ ثبت‌نام', 'وضعیت گذرنامه', 'وضعیت نظام وظیفه', 'کد ملی', 'ایمیل', 'شماره موبایل', 'نام پدر', 'شماره گذرنامه', 'تاریخ صدور گذرنامه', 'تاریخ انقضای گذرنامه', 'شماره دانشجویی', 'مقطع', 'سال ورود', 'تاریخ تولد شمسی', 'تاریخ تولد میلادی', 'اعمال', ..._.map(this.$parent.program.questions, 'title')],
+                availableFields: ['ردیف', 'نام', 'بارکد', 'وضعیت تحصیل', 'وضعیت', 'متاهلی', 'جنسیت', 'تعداد قسط', 'تاریخ ثبت‌نام', 'وضعیت گذرنامه', 'وضعیت نظام وظیفه', 'کد ملی', 'ایمیل', 'شماره موبایل', 'نام پدر', 'شماره گذرنامه', 'تاریخ صدور گذرنامه', 'تاریخ انقضای گذرنامه', 'شماره دانشجویی', 'مقطع', 'سال ورود', 'تاریخ تولد شمسی', 'تاریخ تولد میلادی', 'اعمال', ..._.map(this.$parent.program.questions, 'title')],
                 fields: ['ردیف', 'نام', 'وضعیت تحصیل', 'وضعیت', 'اعمال'],
                 fetchStatus: 'default',
                 choices: {
@@ -299,6 +289,7 @@
             fetchData() {
                 this.fetchStatus = 'fetching'
                 HTTP.get('manage/' + this.$route.params.program_id + '/registrations/?format=json').then(resp => {
+                    console.log(resp.data);
                     this.registrations = resp.data;
                     this.fetchStatus = 'fetched'
                 }).catch(error => {

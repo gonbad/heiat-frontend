@@ -14,7 +14,6 @@ export const HTTP = axios.create({
     }
 });
 
-
 export function exportExcel(list) {
 
     /* generate a worksheet */
