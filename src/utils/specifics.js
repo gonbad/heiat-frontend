@@ -63,6 +63,10 @@ export function flatRegistrations(list, questions = []) {
 let dict = {"0": "9", "1": "8", "2": "7", "3": "6", "4": "5", "5": "4", "6": "3", "7": "2", "8": "1", "9": "0"};
 
 function qrCodeEncrypt(username, mobile) {
+    if (username === null)
+        return "0000000000";
+    if (mobile === null)
+        return username;
     if (mobile.length !== 11 || username.length !== 10)
         return username;
 
