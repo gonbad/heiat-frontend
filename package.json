@@ -8,12 +8,13 @@
   },
   "dependencies": {
     "@chenfengyuan/vue-qrcode": "^1.0.2",
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "bootstrap": "^4.4.1",
     "bootstrap-v4-rtl": "^4.1.1-0",
     "bootstrap-vue": "^2.2.2",
     "file-saver": "^2.0.2",
     "font-awesome": "^4.7.0",
+    "loadsh": "0.0.4",
     "lodash": "^4.17.15",
     "moment-jalaali": "^0.7.4",
     "persianjs": "^0.4.0",
@@ -28,12 +29,12 @@
     "xlsx": "^0.15.4"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.0.3",
-    "@vue/cli-service": "^3.0.3",
-    "cache-loader": "^1.2.2",
+    "@vue/cli-plugin-babel": "^4.1.2",
+    "@vue/cli-service": "^4.1.2",
+    "cache-loader": "^1.2.5",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.13.1",
     "sass-loader": "^7.1.0",
     "vue-template-compiler": "^2.6.11"
   },
