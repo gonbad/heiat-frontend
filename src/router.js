@@ -17,6 +17,7 @@ import ProfileBase from './views/accounts/ProfileBase'
 import ProfilePassport from './views/accounts/ProfilePassport'
 import ProfileChangePassword from './views/accounts/ProfileChangePassword'
 import store from '@/store'
+import DiningCancel from "./views/dining/DiningCancel";
 
 Vue.use(Router)
 
@@ -44,6 +45,11 @@ export default new Router({
             path: '/',
             name: 'Home',
             component: Home
+        },
+        {
+            path: '/dining/cancel/:meal_id',
+            name: 'ResetPasswordConfirm',
+            component: DiningCancel,
         },
         {
             path: '/login',
