@@ -22,13 +22,16 @@
                 <!-- left aligned nav items -->
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item v-if="!isAuthenticated && !authLoading" :to="{ name: 'Login' }">ورود</b-nav-item>
-                    <b-nav-item v-if="isProfileLoaded" to="/profile">{{getUser.first_name}} {{getUser.last_name}}</b-nav-item>
+                    <b-nav-item v-if="isProfileLoaded" to="/profile">{{getUser.first_name}} {{getUser.last_name}}
+                    </b-nav-item>
                     <b-nav-item v-if="isAuthenticated" @click="logout">خروج</b-nav-item>
                 </b-navbar-nav>
 
             </b-collapse>
         </b-navbar>
-        <router-view></router-view>
+        <router-view>
+
+        </router-view>
     </div>
 </template>
 

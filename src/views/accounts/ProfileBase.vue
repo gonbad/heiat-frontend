@@ -55,6 +55,7 @@
                     <span v-show="status==='sending'">در حال ارسال</span>
                     <span v-show="status==='saved'">ذخیره شد</span>
                 </b-button>
+
             </b-form>
         </b-container>
     </div>
@@ -67,7 +68,6 @@
 
 <script>
     import {PROFILE_SUCCESS} from '@/utils/constants'
-
     import {HTTP} from '@/utils'
     import {validateMobile, validateStudentNumber} from '@/utils/validators'
     import {required} from 'vuelidate/lib/validators'

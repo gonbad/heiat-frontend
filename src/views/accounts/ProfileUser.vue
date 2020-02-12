@@ -48,28 +48,25 @@
 
 </template>
 
-<style>
-
-</style>
-
 <script>
     import {USER_SUCCESS} from '@/utils/constants'
     import {HTTP} from '@/utils'
+
 
     export default {
         name: 'ProfileUser',
         data() {
             return {
-                status:'default'
+                status: 'default'
             }
         },
         methods: {
             onSubmit: function (e) {
                 e.preventDefault();
-                this.status='sending';
+                this.status = 'sending';
                 HTTP.patch('auth/users/me/', this.$parent.user).then(resp => {
                     this.$store.commit(USER_SUCCESS, resp.data);
-                    this.status='saved'
+                    this.status = 'saved'
                 })
             }
         },

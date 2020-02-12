@@ -10,6 +10,9 @@
                     <span v-html="data.value"/>
                 </template>
             </b-table>
+            <p v-if="isAuthenticated">بارکد شما:<br/>
+                <qrcode :options="{width: 200}" :value="this.make_qr_code(getUser)" tag="img"></qrcode>
+            </p>
         </div>
 
     </div>
@@ -19,6 +22,10 @@
     import {HTTP} from '@/utils'
     import Vue from 'vue'
     import {BootstrapVue, BootstrapVueIcons} from 'bootstrap-vue'
+    import VueQrcode from '@chenfengyuan/vue-qrcode';
+    import {mapGetters} from "vuex";
+
+    Vue.component("qrcode", VueQrcode);
 
     Vue.use(BootstrapVue);
     Vue.use(BootstrapVueIcons);
@@ -29,6 +36,7 @@
         data() {
             return {
                 programs: [],
+                qrcode: "",
                 fields: [
                     {key: 'title', label: 'عنوان برنامه'},
                     {key: 'program_interval', label: 'زمان برنامه'},
@@ -61,7 +69,44 @@
                     .catch((err) => {
                         console.log(err)
                     })
+            },
+
+            make_qr_code(user) {
+                let dict = {
+                    "0": "9",
+                    "1": "8",
+                    "2": "7",
+                    "3": "6",
+                    "4": "5",
+                    "5": "4",
+                    "6": "3",
+                    "7": "2",
+                    "8": "1",
+                    "9": "0"
+                };
+                let username = user.username;
+                let mobile = user.profile.mobile;
+
+                if (username === null)
+                    return "0000000000";
+                if (mobile === null)
+                    return username;
+                if (mobile.length !== 11 || username.length !== 10)
+                    return username;
+
+                let res = "";
+                for (let i = 0; i < 10; i++) {
+                    res += dict[mobile.charAt(10 - i)];
+                    res += dict[username.charAt(i)];
+                }
+                res += mobile.charAt(0);
+
+                return res
             }
+        },
+        computed: {
+            ...mapGetters(['getUser', 'isAuthenticated', 'isProfileLoaded', 'isManager'])
         }
+
     }
 </script>
